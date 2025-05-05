@@ -35,8 +35,8 @@ window.addEventListener('DOMContentLoaded', event => {
 
 document.addEventListener('DOMContentLoaded', function() {
     const texts = {
-        'en': "Hi, I'm Alex, Welcome to my portfolio. Take a look at the projects I've been passionate about making for fun. I hope you find something that's in your interest. <3",
-        'nl': "Hey, ik ben Alex, welkom op mijn portfolio. Bekijk de projecten waar ik gepassioneerd aan gewerkt heb. Ik hoop dat je iets vindt dat je interesseert. <3",
+        'en': "Hi, I'm Alex, Welcome to my portfolio. Take a look at the projects I've been passionate about making for fun. I hope you find something that's in your interest.",
+        'nl': "Hey, ik ben Alex, welkom op mijn portfolio. Bekijk de projecten waar ik gepassioneerd aan gewerkt heb. Ik hoop dat je iets vindt dat je interesseert.",
     };
 
     const path = window.location.pathname;
