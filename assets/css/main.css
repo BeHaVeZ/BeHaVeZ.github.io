@@ -318,6 +318,44 @@ h6 {
   color: var(--accent-color);
 }
 
+.navmenu a.project-back-link,
+.navmenu a.project-back-link:focus {
+  width: auto;
+  margin: 18px 24px 0;
+  padding: 10px 14px;
+  gap: 10px;
+  border: 1px solid color-mix(in srgb, var(--nav-color), transparent 78%);
+  border-radius: 8px;
+  color: var(--nav-hover-color);
+  background: color-mix(in srgb, var(--nav-color), transparent 92%);
+  font-weight: 500;
+}
+
+.navmenu a.project-back-link i,
+.navmenu a.project-back-link:focus i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--accent-color);
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.navmenu a.project-back-link:hover,
+.navmenu a.project-back-link:focus-visible {
+  color: var(--contrast-color);
+  border-color: var(--accent-color);
+  background: var(--accent-color);
+}
+
+.navmenu a.project-back-link:hover i,
+.navmenu a.project-back-link:focus-visible i {
+  color: var(--contrast-color);
+  transform: translateX(-2px);
+}
+
 .navmenu .active .toggle-dropdown,
 .navmenu .active:focus .toggle-dropdown {
   background-color: var(--accent-color);
@@ -1387,6 +1425,152 @@ section,
 --------------------------------------------------------------*/
 .portfolio-details .portfolio-details-slider img {
   width: 100%;
+}
+
+.portfolio-details .unity-game-panel {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.portfolio-details .unity-game-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 2;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #19191d;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.16);
+}
+
+.portfolio-details #unity-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #231f20;
+}
+
+.portfolio-details #unity-canvas:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+}
+
+.portfolio-details .unity-game-cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    linear-gradient(rgba(10, 12, 16, 0.18), rgba(10, 12, 16, 0.58)),
+    url("/assets/img/portfolio/CarDodgerPortfolioPicture_1024x768.png") center / cover no-repeat;
+}
+
+.portfolio-details .unity-play-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font: 600 15px/1 var(--heading-font);
+  transition: 0.3s;
+}
+
+.portfolio-details .unity-play-button:hover,
+.portfolio-details .unity-play-button:focus-visible {
+  background: color-mix(in srgb, var(--accent-color), #000 12%);
+}
+
+.portfolio-details .unity-play-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.portfolio-details .unity-loading-bar {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(17, 18, 22, 0.72);
+}
+
+.portfolio-details .unity-loading-card {
+  width: min(360px, 100%);
+  color: #ffffff;
+  font: 600 14px/1.4 var(--heading-font);
+  text-align: center;
+}
+
+.portfolio-details .unity-progress-track {
+  width: 100%;
+  height: 10px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.portfolio-details .unity-progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-color);
+  transition: width 0.2s ease;
+}
+
+.portfolio-details #unity-warning {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  z-index: 3;
+  display: none;
+}
+
+.portfolio-details #unity-warning>div {
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: #1f1f1f;
+  font-size: 14px;
+}
+
+.portfolio-details .unity-banner-warning {
+  background: #ffe08a;
+}
+
+.portfolio-details .unity-banner-error {
+  color: #ffffff;
+  background: #c0392b;
+}
+
+.portfolio-details .unity-game-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0 0;
+}
+
+.portfolio-details .unity-game-toolbar h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.portfolio-details .unity-game-toolbar span {
+  display: block;
+  margin-top: 2px;
+  color: color-mix(in srgb, var(--default-color), transparent 35%);
+  font-size: 14px;
 }
 
 .portfolio-details .portfolio-details-slider .swiper-pagination {

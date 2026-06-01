@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Portfolio Details - iPortfolio Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>Car Dodger - Unity WebGL</title>
+  <meta content="Play the Car Dodger Unity game directly in the browser." name="description">
+  <meta content="Unity, WebGL, Car Dodger, game" name="keywords">
 
   <!-- Favicons -->
   <link href="/assets/img/favicon.png" rel="icon">
@@ -46,12 +46,12 @@
     <div class="social-links text-center">
       <a href="https://www.linkedin.com/in/alexanderterentyev/" class="linkedin"><i class="bi bi-linkedin"></i></a>
       <a href="https://github.com/BeHaVeZ" class="github"><i class="bi bi-github"></i></a>
-      <a href="/assets/Alexander_Terentyev_CV.pdf" class="resume"><i class="bi bi-file-earmark-text navicon"></i>
+      <a href="/assets/Alexander_Terentyev_CV.pdf" class="resume"><i class="bi bi-file-earmark-text navicon"></i></a>
     </div>
 
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="/index.html"><i class="bi bi-arrow-return-left"></i>
+        <li><a href="/index.html" class="project-back-link"><i class="bi bi-arrow-left"></i><span>Back</span></a></li>
       </ul>
     </nav>
 
@@ -65,7 +65,7 @@
         <h1 class="mb-2 mb-lg-0">Project Details</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="/index.html">Home</a></li>
             <li class="current">Car Dodger Details</li>
           </ol>
         </nav>
@@ -80,31 +80,35 @@
         <div class="row gy-4">
 
           <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper init-swiper">
+            <div class="unity-game-panel">
+              <div id="unity-container" class="unity-game-shell">
+                <canvas id="unity-canvas" width="420" height="840" tabindex="-1" aria-label="Car Dodger Unity game"></canvas>
 
-              <script type="application/json" class="swiper-config">
-                {
-                  "loop": false,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  }
-                }
-              </script>
+                <div id="unity-cover" class="unity-game-cover">
+                  <button id="unity-start-button" class="unity-play-button" type="button">
+                    <i class="bi bi-play-fill"></i>
+                    <span>Play in browser</span>
+                  </button>
+                </div>
 
-              <div class="swiper-wrapper align-items-center">
+                <div id="unity-loading-bar" class="unity-loading-bar">
+                  <div class="unity-loading-card">
+                    <div id="unity-loading-status">Loading Car Dodger</div>
+                    <div class="unity-progress-track">
+                      <div id="unity-progress-bar-full" class="unity-progress-fill"></div>
+                    </div>
+                  </div>
+                </div>
 
-                <div class="swiper-slide">
-                  <img src="/assets/img/portfolio/CarDodgerPortfolioPicture_1024x768.png" alt="">
+                <div id="unity-warning"></div>
+              </div>
+
+              <div class="unity-game-toolbar">
+                <div>
+                  <h2>Car Dodger</h2>
+                  <span>Unity WebGL build</span>
                 </div>
               </div>
-              <div class="swiper-pagination"></div>
             </div>
           </div>
 
@@ -114,8 +118,8 @@
               <ul>
                 <li><strong>Engine</strong>: Unity</li>
                 <li><strong>Duration</strong>: 2 weeks</li>
-                <li><strong>Category</strong>: Platformer</li>
-                <li><strong>Platform</strong>: iOS
+                <li><strong>Category</strong>: Arcade dodger</li>
+                <li><strong>Platform</strong>: iOS / Android / WebGL</li>
               </ul>
             </div>
             <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
@@ -156,6 +160,100 @@
 
   <!-- Main JS File -->
   <script src="/assets/js/main.js"></script>
+
+  <script>
+    (function () {
+      const canvas = document.querySelector("#unity-canvas");
+      const cover = document.querySelector("#unity-cover");
+      const startButton = document.querySelector("#unity-start-button");
+      const loadingBar = document.querySelector("#unity-loading-bar");
+      const loadingStatus = document.querySelector("#unity-loading-status");
+      const progressBar = document.querySelector("#unity-progress-bar-full");
+      const warningBanner = document.querySelector("#unity-warning");
+
+      if (!canvas || !startButton) {
+        return;
+      }
+
+      let unityInstance = null;
+      let isStarting = false;
+
+      function showUnityBanner(message, type) {
+        const bannerItem = document.createElement("div");
+        bannerItem.textContent = message;
+        bannerItem.className = type === "error" ? "unity-banner-error" : "unity-banner-warning";
+        warningBanner.appendChild(bannerItem);
+        warningBanner.style.display = "block";
+
+        if (type !== "error") {
+          setTimeout(function () {
+            bannerItem.remove();
+            warningBanner.style.display = warningBanner.children.length ? "block" : "none";
+          }, 5000);
+        }
+      }
+
+      function startUnity() {
+        if (isStarting || unityInstance) {
+          return;
+        }
+
+        isStarting = true;
+        startButton.disabled = true;
+        loadingBar.style.display = "flex";
+        loadingStatus.textContent = "Loading Car Dodger";
+
+        const buildUrl = "/assets/WebBuild/Build";
+        const loaderUrl = buildUrl + "/WebBuild.loader.js";
+        const config = {
+          arguments: [],
+          dataUrl: buildUrl + "/WebBuild.data",
+          frameworkUrl: buildUrl + "/WebBuild.framework.js",
+          codeUrl: buildUrl + "/WebBuild.wasm",
+          streamingAssetsUrl: "/assets/WebBuild/StreamingAssets",
+          companyName: "AltForge Studios",
+          productName: "Car Dodger",
+          productVersion: "0.9.0",
+          showBanner: showUnityBanner,
+          devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2)
+        };
+
+        const script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = function () {
+          createUnityInstance(canvas, config, function (progress) {
+            progressBar.style.width = (100 * progress) + "%";
+          }).then(function (instance) {
+            unityInstance = instance;
+            cover.style.display = "none";
+            loadingBar.style.display = "none";
+            canvas.focus();
+          }).catch(function (message) {
+            isStarting = false;
+            startButton.disabled = false;
+            loadingStatus.textContent = "Unable to load the game";
+            showUnityBanner(message, "error");
+          });
+        };
+        script.onerror = function () {
+          isStarting = false;
+          startButton.disabled = false;
+          loadingStatus.textContent = "Unable to load the game";
+          showUnityBanner("Unity loader could not be loaded.", "error");
+        };
+
+        document.body.appendChild(script);
+      }
+
+      startButton.addEventListener("click", startUnity);
+
+      if (document.readyState === "complete") {
+        startUnity();
+      } else {
+        window.addEventListener("load", startUnity);
+      }
+    })();
+  </script>
 
 </body>
 
