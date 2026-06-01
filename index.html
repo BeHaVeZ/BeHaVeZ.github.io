@@ -122,6 +122,13 @@
                   <a href="https://github.com/BeHaVeZ/FMLEngine-Tron_BattleTanks" title="More Details"
                     class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
+                <ul class="portfolio-contributions d-none">
+                  <li>Built an SDL2 scene system, hierarchical GameObject model, and reusable component base class.</li>
+                  <li>Created a prefab registry to spawn predefined tank setups with textures, health, collision, and child turrets.</li>
+                  <li>Implemented keyboard and XInput gamepad controls using command pattern actions such as movement and turret rotation.</li>
+                  <li>Added SDL2 rendering, sprite texture components, custom text/UI components, and FPS/title display support.</li>
+                  <li>Integrated audio playback through a service locator based audio system with commands for behavior such as muting.</li>
+                </ul>
               </div>
             </div><!-- End Portfolio Item -->
 
@@ -138,6 +145,13 @@
                   <a href="https://store.steampowered.com/app/3366710/ColorACube/" title="More Details" class="details-link"><i
                           class="bi bi-link-45deg"></i></a>
                 </div>
+                <ul class="portfolio-contributions d-none">
+                  <li>Contributed to the release of Color a Cube, supporting development, testing, porting, and platform specific improvements.</li>
+                  <li>Built a reusable achievement system supporting multiple projects and platforms, including Steam, Meta and Pico.</li>
+                  <li>Implemented gameplay features such as painting with a brush, painting with hand-tracking, replay-feature to
+                    rewatch how the model was painted.</li>
+                  <li>Worked with Sentry to track, analyze, and help resolve crashes and technical issues in production.</li>
+                </ul>
               </div>
             </div><!-- End Portfolio Item -->
 
@@ -154,6 +168,11 @@
                   <!-- <a href="" title="More Details"
                     class="details-link"><i class="bi bi-link-45deg"></i></a> -->
                 </div>
+                <ul class="portfolio-contributions d-none">
+                  <li>Built the reservation and cancellation flow for weekly laundry time slots.</li>
+                  <li>Added multi-select booking so dormmates can reserve multiple slots efficiently.</li>
+                  <li>Implemented dark mode and live highlighting for today's current day and hour.</li>
+                </ul>
               </div>
             </div><!-- End Portfolio Item -->
 
@@ -186,6 +205,12 @@
                   <a href="https://wakolat.itch.io/shiver-thy-timbers" title="More Details" class="details-link"><i
                           class="bi bi-link-45deg"></i></a>
                 </div>
+                <ul class="portfolio-contributions d-none">
+                  <li>Built AI behaviors using a self created behavior tree framework (Unity), enabling modular pirate behavior authoring and debugging.</li>
+                  <li>Integrated navigation and state-driven decision making for NPCs to support common and special pirate roles
+                    (e.g., work/rest/wander behaviors) and reactive behaviors when threatened.</li>
+                  <li>Collaborated in a team setting with iterative development practices and clear task ownership.</li>
+                </ul>
               </div>
             </div><!-- End Portfolio Item -->
 
@@ -311,6 +336,41 @@
     </section><!-- /Portfolio Section -->
 
   </main>
+
+  <div class="modal fade portfolio-modal" id="portfolio-details-modal" tabindex="-1"
+    aria-labelledby="portfolio-details-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <button type="button" class="portfolio-modal-nav portfolio-modal-prev" aria-label="Previous project">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button type="button" class="portfolio-modal-nav portfolio-modal-next" aria-label="Next project">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+      <div class="modal-content">
+        <button type="button" class="btn-close portfolio-modal-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+        <div class="modal-body">
+          <div class="portfolio-modal-grid">
+            <div class="portfolio-modal-copy">
+              <h3 id="portfolio-details-modal-title" class="portfolio-modal-title"></h3>
+              <p class="portfolio-modal-description"></p>
+              <div class="portfolio-modal-contributions d-none">
+                <h4>My contributions</h4>
+                <ul class="portfolio-modal-contributions-list"></ul>
+              </div>
+              <a class="portfolio-modal-project-link d-none" href="#" target="_blank" rel="noopener">
+                <i class="bi bi-link-45deg"></i>
+                View project
+              </a>
+            </div>
+            <div class="portfolio-modal-media">
+              <img class="portfolio-modal-image" src="" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
