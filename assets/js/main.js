@@ -149,6 +149,9 @@
     const modalProjectLink = portfolioModalElement.querySelector('.portfolio-modal-project-link');
     const modalPreviousButton = portfolioModalElement.querySelector('.portfolio-modal-prev');
     const modalNextButton = portfolioModalElement.querySelector('.portfolio-modal-next');
+    const imageLightbox = document.querySelector('.portfolio-image-lightbox');
+    const imageLightboxImage = imageLightbox?.querySelector('.portfolio-image-lightbox-image');
+    const imageLightboxClose = imageLightbox?.querySelector('.portfolio-image-lightbox-close');
     let activePortfolioContent = null;
 
     function getFilteredPortfolioContents() {
@@ -172,7 +175,38 @@
       modalNextButton.disabled = !hasMultipleProjects;
     }
 
+    function isImageLightboxOpen() {
+      return imageLightbox?.classList.contains('is-open') ?? false;
+    }
+
+    function openImageLightbox() {
+      const imageSource = modalImage.getAttribute('src');
+
+      if (!imageLightbox || !imageLightboxImage || !imageSource) {
+        return;
+      }
+
+      imageLightboxImage.src = imageSource;
+      imageLightboxImage.alt = modalImage.alt;
+      imageLightbox.classList.add('is-open');
+      imageLightbox.setAttribute('aria-hidden', 'false');
+      imageLightboxClose?.focus();
+    }
+
+    function closeImageLightbox() {
+      if (!isImageLightboxOpen()) {
+        return;
+      }
+
+      imageLightbox.classList.remove('is-open');
+      imageLightbox.setAttribute('aria-hidden', 'true');
+      imageLightboxImage?.removeAttribute('src');
+      modalImage.focus({ preventScroll: true });
+    }
+
     function openPortfolioModal(portfolioContent) {
+      closeImageLightbox();
+
       const title = portfolioContent.querySelector('h4')?.textContent.trim() ?? '';
       const description = portfolioContent.querySelector('p')?.textContent.trim() ?? '';
       const previewLink = portfolioContent.querySelector('.preview-link');
@@ -228,6 +262,43 @@
     modalNextButton.addEventListener('click', function() {
       navigatePortfolioModal(1);
     });
+
+    modalImage.setAttribute('role', 'button');
+    modalImage.setAttribute('tabindex', '0');
+    modalImage.setAttribute('aria-label', 'Open full-size image preview');
+
+    modalImage.addEventListener('click', openImageLightbox);
+
+    modalImage.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openImageLightbox();
+      }
+    });
+
+    imageLightbox?.addEventListener('click', function(e) {
+      if (e.target === imageLightbox) {
+        closeImageLightbox();
+      }
+    });
+
+    imageLightboxImage?.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+
+    imageLightboxClose?.addEventListener('click', closeImageLightbox);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Escape' || !isImageLightboxOpen()) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+      closeImageLightbox();
+    }, true);
+
+    portfolioModalElement.addEventListener('hidden.bs.modal', closeImageLightbox);
 
     portfolioModalElement.addEventListener('keydown', function(e) {
       if (e.key === 'ArrowLeft') {

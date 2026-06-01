@@ -1033,6 +1033,42 @@ section,
   height: 100%;
   max-height: 72vh;
   object-fit: contain;
+  cursor: zoom-in;
+}
+
+.portfolio-image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1090;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(5, 13, 24, 0.92);
+}
+
+.portfolio-image-lightbox.is-open {
+  display: flex;
+}
+
+.portfolio-image-lightbox-image {
+  display: block;
+  max-width: calc(100vw - 56px);
+  max-height: calc(100vh - 56px);
+  object-fit: contain;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.portfolio-image-lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.86);
+  opacity: 1;
 }
 
 @media (max-width: 767px) {
@@ -1065,6 +1101,15 @@ section,
 
   .portfolio-modal .portfolio-modal-image {
     max-height: 320px;
+  }
+
+  .portfolio-image-lightbox {
+    padding: 16px;
+  }
+
+  .portfolio-image-lightbox-image {
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
   }
 
   .portfolio-modal .portfolio-modal-nav {
