@@ -823,6 +823,7 @@ section,
 .portfolio .portfolio-content {
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .portfolio .portfolio-content img {

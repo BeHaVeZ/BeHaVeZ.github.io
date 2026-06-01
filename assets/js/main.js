@@ -135,6 +135,22 @@
   });
 
   /**
+   * Open portfolio preview when clicking the project card itself
+   */
+  document.querySelectorAll('.portfolio .portfolio-content').forEach(function(portfolioContent) {
+    portfolioContent.addEventListener('click', function(e) {
+      if (e.target.closest('a')) {
+        return;
+      }
+
+      const previewLink = this.querySelector('.preview-link');
+      if (previewLink) {
+        previewLink.click();
+      }
+    });
+  });
+
+  /**
    * Init isotope layout and filters
    */
   document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
