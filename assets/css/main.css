@@ -1711,9 +1711,3 @@ section,
   object-fit: cover;
 }
 
-.portfolio-content img.portfolio-img-mobile {
-  object-fit: contain;
-  padding: 12px;
-  background: #111; /*#f4fafd*/
-}
-
