@@ -116,22 +116,269 @@
             <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
               <h3>Project information</h3>
               <ul>
-                <li><strong>Engine</strong>: Unity</li>
-                <li><strong>Duration</strong>: 2 weeks</li>
-                <li><strong>Category</strong>: Arcade dodger</li>
+                <li><strong>Engine</strong>: Unity 6.2</li>
+                <li><strong>Language</strong>: C#</li>
+                <li><strong>Render Pipeline</strong>: URP</li>
+                <li><strong>Category</strong>: Mobile arcade dodger</li>
                 <li><strong>Platform</strong>: iOS / Android / WebGL</li>
               </ul>
             </div>
             <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2>Details over the project</h2>
+              <h2>Project overview</h2>
               <p>
-                The following project was created for education and testing purposes to understand how to upload to the appstore using XCode.<br>
-                To learn about the project in detail you can download the game creation overview (pdf) by clicking the download button below this text that will be available soon.<br>
-                To learn more about me, you can always click the "back" button in the navigation window to return to my portfolio website or you can visit my <a href="https://github.com/BeHaVeZ">github</a>/<a href="https://www.linkedin.com/in/alexanderterentyev/">linkedin</a> page.
-                  </p>
+                Car Dodger is a mobile-first arcade dodger built in Unity. The player avoids incoming traffic, survives as long as possible, and competes for high scores.
+              </p>
+              <p>
+                The project focuses on clean game flow, mobile readiness, reusable infrastructure, and fast iteration. Startup, scene loading, gameplay, scoring, difficulty, pooling, and UI behaviour are split into smaller systems instead of one large manager.
+              </p>
             </div>
           </div>
 
+        </div>
+
+        <div class="project-detail-content mt-5" data-aos="fade-up" data-aos-delay="150">
+          <h3>What I Built</h3>
+          <p>
+            I used Car Dodger to build more than a one-off game. The project validates reusable Unity infrastructure that can be moved into future projects, especially the Mobile Bootstrap and Scene Flow packages.
+          </p>
+
+          <div class="project-highlight-grid">
+            <article class="project-highlight-card">
+              <h4>Reusable Startup</h4>
+              <p>A bootstrap scene initializes app settings, services, optional modules, and the first gameplay scene before the game starts.</p>
+            </article>
+            <article class="project-highlight-card">
+              <h4>Mobile Runtime Systems</h4>
+              <p>Vehicles and effects are pooled and reused to reduce allocation spikes and garbage collection pressure during gameplay.</p>
+            </article>
+            <article class="project-highlight-card">
+              <h4>Decoupled Gameplay</h4>
+              <p>Gameplay events, scoring rules, and difficulty changes are handled through focused systems instead of direct script dependencies.</p>
+            </article>
+          </div>
+
+          <h3>Architecture Highlights</h3>
+          <ul class="project-pill-list">
+            <li>Bootstrap scene and gameplay scene separation</li>
+            <li>Reusable mobile startup package</li>
+            <li>Scene Flow editor tooling for safer iteration</li>
+            <li>ScriptableObject-driven difficulty settings</li>
+            <li>Event buses for gameplay and score events</li>
+            <li>Object pooling for vehicles and particles</li>
+            <li>Mobile safe-area handling</li>
+            <li>Unity Leaderboards with local fallback</li>
+          </ul>
+
+          <h3>Readable Code Excerpts</h3>
+          <p>
+            These embedded snippets show the engineering decisions behind the project: reusable startup architecture, editor tooling, mobile-conscious spawning, and decoupled score and difficulty systems.
+          </p>
+
+          <div class="code-showcase">
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Mobile Bootstrap Package</span>
+                <h4>Reusable startup pipeline</h4>
+                <p>
+                  A persistent <code>AppRoot</code> builds service registrations, creates a startup plan, runs phases in order, and then enters the first gameplay scene.
+                </p>
+              </div>
+              <details class="code-details" open>
+                <summary>Read AppRoot excerpt</summary>
+                <pre><code class="language-csharp">private async void Awake()
+{
+    if (startupStarted)
+        return;
+
+    startupStarted = true;
+    DontDestroyOnLoad(gameObject);
+
+    ServiceRegistry services = BuildDefaultServices();
+    IReadOnlyList&lt;IMobileBootstrapModule&gt; resolvedModules = ResolveModules();
+
+    RegisterModuleServices(resolvedModules, services);
+
+    StartupContext context = new(this, config, services);
+    StartupPlan plan = BuildPlan(resolvedModules);
+    StartupCoordinator coordinator = new();
+
+    await coordinator.RunAsync(plan, context);
+}
+
+private StartupPlan BuildPlan(IReadOnlyList&lt;IMobileBootstrapModule&gt; resolvedModules)
+{
+    StartupPlan plan = new();
+
+    plan.Add(StartupPhase.CriticalBoot, new ConfigureApplicationStep());
+    plan.Add(StartupPhase.CriticalBoot, new InitializeSaveStep());
+    plan.Add(StartupPhase.CriticalBoot, new LoadSettingsStep());
+
+    plan.Add(StartupPhase.RequiredServices, new InitializeAudioStep());
+    plan.Add(StartupPhase.RequiredServices, new ApplySettingsStep());
+
+    if (config.LoadFirstSceneOnStartup)
+        plan.Add(StartupPhase.EnterGame, new LoadFirstSceneStep());
+
+    return plan;
+}</code></pre>
+              </details>
+            </article>
+
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Scene Flow Editor Tool</span>
+                <h4>Tooling to reduce iteration mistakes</h4>
+                <p>
+                  The editor window tracks important scenes, exposes additive open/close controls, and can force Play Mode to start from the bootstrap scene.
+                </p>
+              </div>
+              <details class="code-details">
+                <summary>Read SceneFlowWindow excerpt</summary>
+                <pre><code class="language-csharp">private void DrawPlayModeSection()
+{
+    EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+    EditorGUILayout.LabelField("Play Mode", EditorStyles.boldLabel);
+
+    EditorGUI.BeginChangeCheck();
+    bool playFromSpecificScene = EditorGUILayout.Toggle(
+        "Play From Specific Scene",
+        config.PlayFromSpecificScene);
+
+    SceneAsset playModeStartScene = (SceneAsset)EditorGUILayout.ObjectField(
+        "Start Scene",
+        config.PlayModeStartScene,
+        typeof(SceneAsset),
+        false);
+
+    if (EditorGUI.EndChangeCheck())
+    {
+        Undo.RecordObject(config, "Update Scene Flow Play Mode");
+        config.PlayFromSpecificScene = playFromSpecificScene;
+        config.PlayModeStartScene = playModeStartScene;
+        EditorUtility.SetDirty(config);
+        SceneFlowEditorUtility.ApplyPlayModeStartScene(config);
+    }
+
+    EditorGUILayout.EndVertical();
+}
+
+private void SetPlayModeStartScene(SceneAsset sceneAsset)
+{
+    Undo.RecordObject(config, "Set Scene Flow Start Scene");
+    config.PlayFromSpecificScene = true;
+    config.PlayModeStartScene = sceneAsset;
+    EditorUtility.SetDirty(config);
+    SceneFlowEditorUtility.ApplyPlayModeStartScene(config);
+}</code></pre>
+              </details>
+            </article>
+
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Mobile-Friendly Runtime Systems</span>
+                <h4>Pooling connected to wave spawning</h4>
+                <p>
+                  Vehicles are prewarmed and reused. The spawner requests objects from the pool, checks lane safety, applies spawn state, and avoids unnecessary runtime allocation.
+                </p>
+              </div>
+              <details class="code-details">
+                <summary>Read pooling and spawning excerpt</summary>
+                <pre><code class="language-csharp">public void WarmPool(GameObject prefab, int count)
+{
+    string key = prefab.name;
+    if (!poolDictionary.ContainsKey(key))
+        poolDictionary[key] = new Queue&lt;GameObject&gt;();
+
+    for (int i = 0; i &lt; count; i++)
+    {
+        GameObject obj = Instantiate(prefab);
+        obj.name = key;
+        obj.SetActive(false);
+        poolDictionary[key].Enqueue(obj);
+    }
+}
+
+private void SpawnVehicleAtLane(Transform sp)
+{
+    GameObject prefab = vehicles[Random.Range(0, vehicles.Length)];
+    GameObject obj = ObjectPooler.Instance.SpawnFromPool(
+        prefab,
+        sp.position,
+        prefab.transform.rotation);
+
+    Vehicle vehicle = obj.GetComponent&lt;Vehicle&gt;();
+    if (vehicle == null)
+        return;
+
+    float speed = Random.Range(minVehicleSpeed, maxVehicleSpeed);
+    vehicle.ApplySpawnState(speed);
+}
+
+private void EnsurePoolPrewarmed()
+{
+    if (hasPrewarmed || ObjectPooler.Instance == null || vehicles == null)
+        return;
+
+    for (int i = 0; i &lt; vehicles.Length; i++)
+        ObjectPooler.Instance.WarmPool(vehicles[i], warmPerPrefab);
+
+    hasPrewarmed = true;
+}</code></pre>
+              </details>
+            </article>
+
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Decoupled Gameplay Logic</span>
+                <h4>Events, score rules, and difficulty updates</h4>
+                <p>
+                  Gameplay systems publish events without knowing who consumes them. Score rules and difficulty stages react to those signals through dedicated managers.
+                </p>
+              </div>
+              <details class="code-details">
+                <summary>Read event and difficulty excerpt</summary>
+                <pre><code class="language-csharp">public static void Publish(in GameplayEvent gameplayEvent)
+{
+    if (listeners.Count == 0)
+        return;
+
+    isDispatching = true;
+
+    for (int i = 0; i &lt; listeners.Count; i++)
+        listeners[i].OnGameplayEvent(in gameplayEvent);
+
+    isDispatching = false;
+    FlushPendingChanges();
+}
+
+public void OnGameplayEvent(in GameplayEvent gameplayEvent)
+{
+    if (!TryGetRule(gameplayEvent.Type, out ScoreRule rule))
+        return;
+
+    scoreManager.AddPoints(
+        rule.points,
+        rule.reason,
+        rule.presentation,
+        gameplayEvent.WorldPosition,
+        rule.presentation == ScoreChangePresentation.PopupToScore,
+        gameplayEvent.Intensity);
+}
+
+private void ApplyToSpawners(DifficultyStage stage)
+{
+    foreach (var spawner in spawners)
+    {
+        if (!spawner)
+            continue;
+
+        spawner.SetVehicleSpeedRange(stage.minVehicleSpeed, stage.maxVehicleSpeed);
+        spawner.SetWaveInterval(stage.spawnIntervalSeconds);
+    }
+}</code></pre>
+              </details>
+            </article>
+          </div>
         </div>
 
       </div>
@@ -160,6 +407,83 @@
 
   <!-- Main JS File -->
   <script src="/assets/js/main.js"></script>
+
+  <script>
+    (function () {
+      const csharpBlocks = document.querySelectorAll("code.language-csharp");
+      const keywords = new Set([
+        "async", "await", "bool", "break", "class", "const", "continue", "else", "false",
+        "foreach", "for", "if", "in", "int", "internal", "new", "null", "private",
+        "protected", "public", "return", "static", "string", "true", "void"
+      ]);
+      const literals = new Set(["true", "false", "null"]);
+      const tokenPattern = /\/\/.*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b\d+(?:\.\d+)?f?\b|\b[A-Za-z_][A-Za-z0-9_]*\b/g;
+
+      function escapeHtml(value) {
+        return value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function classifyToken(token, source, tokenEndIndex) {
+        if (token.startsWith("//")) {
+          return "comment";
+        }
+
+        if (token.startsWith("\"") || token.startsWith("'")) {
+          return "string";
+        }
+
+        if (/^\d/.test(token)) {
+          return "number";
+        }
+
+        if (literals.has(token)) {
+          return "literal";
+        }
+
+        if (keywords.has(token)) {
+          return "keyword";
+        }
+
+        const nextCharacter = source.slice(tokenEndIndex).match(/\S/)?.[0];
+        if (nextCharacter === "(") {
+          return "method";
+        }
+
+        if (/^[A-Z]/.test(token)) {
+          return "type";
+        }
+
+        return "";
+      }
+
+      function highlight(source) {
+        let highlighted = "";
+        let cursor = 0;
+
+        source.replace(tokenPattern, function (token, offset) {
+          const tokenEndIndex = offset + token.length;
+          const tokenClass = classifyToken(token, source, tokenEndIndex);
+
+          highlighted += escapeHtml(source.slice(cursor, offset));
+          highlighted += tokenClass
+            ? `<span class="code-token-${tokenClass}">${escapeHtml(token)}</span>`
+            : escapeHtml(token);
+          cursor = tokenEndIndex;
+
+          return token;
+        });
+
+        return highlighted + escapeHtml(source.slice(cursor));
+      }
+
+      csharpBlocks.forEach(function (codeBlock) {
+        codeBlock.innerHTML = highlight(codeBlock.textContent);
+      });
+    })();
+  </script>
 
   <script>
     (function () {
@@ -211,7 +535,7 @@
           frameworkUrl: buildUrl + "/WebBuild.framework.js",
           codeUrl: buildUrl + "/WebBuild.wasm",
           streamingAssetsUrl: "/assets/WebBuild/StreamingAssets",
-          companyName: "AltForge Studios",
+          companyName: "... Studios",
           productName: "Car Dodger",
           productVersion: "0.9.0",
           showBanner: showUnityBanner,

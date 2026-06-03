@@ -147,6 +147,7 @@
     const modalContributions = portfolioModalElement.querySelector('.portfolio-modal-contributions');
     const modalContributionsList = portfolioModalElement.querySelector('.portfolio-modal-contributions-list');
     const modalProjectLink = portfolioModalElement.querySelector('.portfolio-modal-project-link');
+    const modalDetailLink = portfolioModalElement.querySelector('.portfolio-modal-detail-link');
     const modalPreviousButton = portfolioModalElement.querySelector('.portfolio-modal-prev');
     const modalNextButton = portfolioModalElement.querySelector('.portfolio-modal-next');
     const imageLightbox = document.querySelector('.portfolio-image-lightbox');
@@ -210,7 +211,8 @@
       const title = portfolioContent.querySelector('h4')?.textContent.trim() ?? '';
       const description = portfolioContent.querySelector('p')?.textContent.trim() ?? '';
       const previewLink = portfolioContent.querySelector('.preview-link');
-      const detailsLink = portfolioContent.querySelector('.details-link');
+      const projectLink = portfolioContent.querySelector('.details-link:not([data-detail-page="true"])');
+      const detailPageLink = portfolioContent.querySelector('.detail-page-link, .details-link[data-detail-page="true"]');
       const image = portfolioContent.querySelector('img');
       const contributionItems = portfolioContent.querySelectorAll('.portfolio-contributions li');
 
@@ -228,12 +230,20 @@
       });
       modalContributions.classList.toggle('d-none', contributionItems.length === 0);
 
-      if (detailsLink) {
-        modalProjectLink.href = detailsLink.href;
+      if (projectLink) {
+        modalProjectLink.href = projectLink.href;
         modalProjectLink.classList.remove('d-none');
       } else {
         modalProjectLink.removeAttribute('href');
         modalProjectLink.classList.add('d-none');
+      }
+
+      if (detailPageLink) {
+        modalDetailLink.href = detailPageLink.href;
+        modalDetailLink.classList.remove('d-none');
+      } else {
+        modalDetailLink.removeAttribute('href');
+        modalDetailLink.classList.add('d-none');
       }
 
       updatePortfolioModalNav();
