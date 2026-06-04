@@ -215,8 +215,14 @@
       const detailPageLink = portfolioContent.querySelector('.detail-page-link, .details-link[data-detail-page="true"]');
       const image = portfolioContent.querySelector('img');
       const contributionItems = portfolioContent.querySelectorAll('.portfolio-contributions li');
+      const modalTheme = portfolioContent.dataset.modalTheme?.trim();
 
       activePortfolioContent = portfolioContent;
+      if (modalTheme) {
+        portfolioModalElement.dataset.modalTheme = modalTheme;
+      } else {
+        delete portfolioModalElement.dataset.modalTheme;
+      }
       modalTitle.textContent = title;
       modalDescription.textContent = previewLink?.getAttribute('title') ?? description;
       modalImage.src = previewLink?.getAttribute('href') ?? image?.getAttribute('src') ?? '';

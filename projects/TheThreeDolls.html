@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>The Three Dolls - Alex Terentyev</title>
-  <meta content="A horror game made for one of the biggest horror jams of the year." name="description">
+  <meta content="A fixed-perspective horror game about surviving three dolls, built during a team game jam." name="description">
   <meta content="Unity, C#, Horror Game, Game Jam, Team Project" name="keywords">
 
   <link href="/assets/img/favicon.png" rel="icon">
@@ -21,9 +21,10 @@
   <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <link href="/assets/css/main.css" rel="stylesheet">
+  <link href="/assets/css/the-three-dolls.css" rel="stylesheet">
 </head>
 
-<body class="portfolio-details-page">
+<body class="portfolio-details-page three-dolls-page">
 
   <header id="header" class="header dark-background d-flex flex-column">
     <i class="header-toggle d-xl-none bi bi-list"></i>
@@ -55,7 +56,7 @@
 
     <div class="page-title dark-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">The Three Dolls</h1>
+        <h1 class="mb-2 mb-lg-0">The Three Dolls - Behind the scenes</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="/index.html">Home</a></li>
@@ -82,6 +83,8 @@
                 <li><strong>Language</strong>: C#</li>
                 <li><strong>Category</strong>: Horror game</li>
                 <li><strong>Project type</strong>: Team game jam</li>
+                <li><strong>Role</strong>: Gameplay design, AI logic, version control</li>
+                <li><strong>Result</strong>: Top 10 horror category</li>
               </ul>
             </div>
 
@@ -97,18 +100,146 @@
         <div class="row">
           <div class="col-lg-10">
             <div class="portfolio-description project-detail-content" data-aos="fade-up" data-aos-delay="300">
-              <h2>Overview</h2>
+              <p class="project-kicker">Fixed-camera psychological horror</p>
+              <h2>Designing tension around one room</h2>
               <p>
-                The Three Dolls is a horror game made for one of the biggest horror jams of the year. The project placed in the top 10 in the horror category.
+                The Three Dolls started with a practical design constraint: we had a short game-jam deadline, so the core idea had to be focused enough to finish but strong enough to create tension quickly. We continued with a FNAF-inspired setup where the player is locked in place and hunted by three dolls.
+              </p>
+              <p>
+                The result is a fixed-perspective horror game where every threat is readable from one room. The player has to survive until dawn by listening, watching the environment, and learning how each doll behaves.
               </p>
 
-              <h3>My work</h3>
-              <ul>
-                <li>Designed the flow of the game loop with lore for each of the dolls.</li>
-                <li>Implemented the AI logic for the green and blue doll.</li>
-                <li>Combined the lamp gameplay with the green and blue doll mechanics.</li>
-                <li>Set up the project with version control for the team.</li>
+              <div class="project-highlight-grid three-dolls-summary">
+                <div class="project-highlight-card">
+                  <h4>Core idea</h4>
+                  <p>Keep the player locked in place and make the room itself the play space.</p>
+                </div>
+
+                <div class="project-highlight-card">
+                  <h4>My focus</h4>
+                  <p>Gameplay flow, doll logic, the lamp interaction, and team version control.</p>
+                </div>
+
+                <div class="project-highlight-card">
+                  <h4>Design goal</h4>
+                  <p>Escalate pressure without overwhelming the player with all mechanics at once.</p>
+                </div>
+              </div>
+
+              <h3>Rapid prototype</h3>
+              <p>
+                Early on, I created a quick prototype so the team could align on the feel of the game. This helped us test the fixed-point perspective, the player view limits, and how the main interaction areas would sit around the player.
+              </p>
+
+              <figure class="three-dolls-media">
+                <img src="/assets/projects/TheThreeDolls/Prototype.gif" alt="Early prototype of The Three Dolls room interaction" loading="lazy">
+                <figcaption>The prototype</figcaption>
+              </figure>
+
+              <figure class="three-dolls-media">
+                <video controls autoplay loop muted preload="metadata" playsinline poster="/assets/projects/TheThreeDolls/room_layout.png">
+                  <source src="/assets/projects/TheThreeDolls/first_layout.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <figcaption>Early room layout</figcaption>
+              </figure>
+
+              <h3>Room layout and threat areas</h3>
+              <p>
+                Once the dolls became the antagonists, the next challenge was making each one distinct. Their colors helped separate them visually, but the important part was giving every doll its own hunting style and area of the room.
+              </p>
+
+              <ul class="project-pill-list three-dolls-zones">
+                <li><strong>Blue doll</strong> - door, in front of the player</li>
+                <li><strong>Green doll</strong> - closet, left of the player</li>
+                <li><strong>Red doll</strong> - window, right of the player</li>
               </ul>
+
+              <figure class="three-dolls-media three-dolls-media-narrow">
+                <img src="/assets/projects/TheThreeDolls/room_layout.png" alt="Top-down room layout for The Three Dolls" loading="lazy">
+                <figcaption>Planning correctly makes the player look around the whole room.</figcaption>
+              </figure>
+
+              <p>
+                Each doll is introduced through its own area. The blue doll becomes active when the door opens, the green doll becomes active when the closet opens, and the red doll becomes active after a thunder strike.
+              </p>
+
+              <h3>The three dolls</h3>
+              <div class="three-dolls-mechanics">
+                <article>
+                  <span>Green doll</span>
+                  <h4>Light pressure</h4>
+                  <p>
+                    The green doll plays with the player's light when the player is not looking. It moves closer in the dark, so the player learns that the light is not just atmosphere, but protection.
+                  </p>
+                </article>
+
+                <article>
+                  <span>Blue doll</span>
+                  <h4>Sound pressure</h4>
+                  <p>
+                    The blue doll starts outside the room and runs toward the player. Loud thuds get closer over time, pushing the player to keep checking the dark doorway.
+                  </p>
+                </article>
+
+                <article>
+                  <span>Red doll</span>
+                  <h4>Attention pressure</h4>
+                  <p>
+                    The red doll knocks on the window and waits for the player to look at it. If the player misses it, the doll disrupts the view and creates an opening for the other dolls.
+                  </p>
+                </article>
+              </div>
+
+              <div class="project-detail-gallery three-dolls-gallery">
+                <figure>
+                  <img src="/assets/projects/TheThreeDolls/green_doll1.png" alt="Green doll near the closet" loading="lazy">
+                  <figcaption>The green doll inside the closet.</figcaption>
+                </figure>
+
+                <figure>
+                  <img src="/assets/projects/TheThreeDolls/red_doll.png" alt="Red doll shadow in the room" loading="lazy">
+                  <figcaption>The red doll with its shadow.</figcaption>
+                </figure>
+
+                <figure>
+                  <img src="/assets/projects/TheThreeDolls/red_doll1.png" alt="Red doll outside the window" loading="lazy">
+                  <figcaption>The red dolls playing area.</figcaption>
+                </figure>
+              </div>
+
+              <figure class="three-dolls-media three-dolls-media-narrow">
+                <video controls preload="metadata" playsinline poster="/assets/projects/TheThreeDolls/red_doll.png">
+                  <source src="/assets/projects/TheThreeDolls/testing.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <figcaption>A tester reacting to the red doll's shadow, which helped confirm that the thunder reveal created the needed tension increase.</figcaption>
+              </figure>
+
+              <h3>Story framing</h3>
+              <p>
+                We kept the story simple because game-jam players usually spend only a few minutes with each game. A short preface gives context before the player starts, while players who want to jump straight into the action can skip it.
+              </p>
+
+              <figure class="three-dolls-media">
+                <img src="/assets/projects/TheThreeDolls/preface.gif" alt="The Three Dolls preface sequence" loading="lazy">
+                <figcaption>The preface</figcaption>
+              </figure>
+
+              <h3>Player guidance</h3>
+              <p>
+                We avoided explaining every mechanic upfront. Instead, the player learns through escalation, repeated tells, and death hints. The postface sequence gives a rhyme that points toward what each doll does and how the player can counter it.
+              </p>
+
+              <figure class="three-dolls-media">
+                <img src="/assets/projects/TheThreeDolls/postface.gif" alt="The Three Dolls postface sequence" loading="lazy">
+                <figcaption>The postface</figcaption>
+              </figure>
+
+              <h3>Reflection</h3>
+              <p>
+                This project was especially interesting because it was not only a programming challenge. A lot of the work was about game design, how to build a tension curve, how to introduce mechanics without chaos, and how to keep the player engaged while they are physically locked in one position.
+              </p>
             </div>
           </div>
         </div>

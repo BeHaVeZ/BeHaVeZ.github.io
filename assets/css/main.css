@@ -931,6 +931,50 @@ section,
   transform: scale(1.1);
 }
 
+.portfolio-modal {
+  --portfolio-modal-content-background: #ffffff;
+  --portfolio-modal-content-border: 0;
+  --portfolio-modal-copy-background: #ffffff;
+  --portfolio-modal-copy-color: var(--default-color);
+  --portfolio-modal-title-color: var(--heading-color);
+  --portfolio-modal-description-color: color-mix(in srgb, var(--default-color), transparent 18%);
+  --portfolio-modal-muted-color: color-mix(in srgb, var(--default-color), transparent 18%);
+  --portfolio-modal-accent-color: var(--accent-color);
+  --portfolio-modal-media-background: #050d18;
+  --portfolio-modal-close-background: rgba(255, 255, 255, 0.86);
+  --portfolio-modal-close-filter: none;
+  --portfolio-modal-nav-color: var(--accent-color);
+  --portfolio-modal-nav-background: rgba(5, 13, 24, 0.68);
+  --portfolio-modal-nav-hover-color: #ffffff;
+  --portfolio-modal-nav-hover-background: var(--accent-color);
+  --portfolio-modal-image-filter: none;
+  --portfolio-modal-shadow: 0 24px 80px rgba(5, 13, 24, 0.35);
+}
+
+.portfolio-modal[data-modal-theme="the-three-dolls"] {
+  --portfolio-modal-content-background: #030000;
+  --portfolio-modal-content-border: 1px solid rgba(149, 20, 20, 0.42);
+  --portfolio-modal-copy-background:
+    radial-gradient(circle at 0% 12%, rgba(126, 0, 0, 0.18), transparent 18rem),
+    linear-gradient(145deg, #080000 0%, #170202 54%, #030000 100%);
+  --portfolio-modal-copy-color: #d82727;
+  --portfolio-modal-title-color: #c61e1e;
+  --portfolio-modal-description-color: #d82727;
+  --portfolio-modal-muted-color: #bc2424;
+  --portfolio-modal-accent-color: #ff3939;
+  --portfolio-modal-media-background:
+    radial-gradient(circle at 50% 30%, rgba(119, 77, 22, 0.2), transparent 18rem),
+    #020000;
+  --portfolio-modal-close-background: rgba(255, 239, 236, 0.9);
+  --portfolio-modal-close-filter: none;
+  --portfolio-modal-nav-color: #ff3939;
+  --portfolio-modal-nav-background: rgba(31, 0, 0, 0.82);
+  --portfolio-modal-nav-hover-color: #fff1ed;
+  --portfolio-modal-nav-hover-background: #c91d1d;
+  --portfolio-modal-image-filter: brightness(0.74) contrast(1.15) saturate(0.9);
+  --portfolio-modal-shadow: 0 30px 95px rgba(0, 0, 0, 0.76), 0 0 46px rgba(120, 0, 0, 0.22);
+}
+
 .modal-backdrop.show {
   opacity: 0.82;
 }
@@ -941,10 +985,12 @@ section,
 }
 
 .portfolio-modal .modal-content {
-  border: 0;
+  color: var(--portfolio-modal-copy-color);
+  background: var(--portfolio-modal-content-background);
+  border: var(--portfolio-modal-content-border);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 24px 80px rgba(5, 13, 24, 0.35);
+  box-shadow: var(--portfolio-modal-shadow);
 }
 
 .portfolio-modal .modal-body {
@@ -959,7 +1005,8 @@ section,
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.86);
+  background-color: var(--portfolio-modal-close-background);
+  filter: var(--portfolio-modal-close-filter);
   opacity: 1;
 }
 
@@ -975,8 +1022,8 @@ section,
   height: 58px;
   border: 0;
   border-radius: 6px;
-  color: var(--accent-color);
-  background: rgba(5, 13, 24, 0.68);
+  color: var(--portfolio-modal-nav-color);
+  background: var(--portfolio-modal-nav-background);
   font-size: 34px;
   line-height: 1;
   transform: translateY(-50%);
@@ -985,8 +1032,8 @@ section,
 
 .portfolio-modal .portfolio-modal-nav:hover,
 .portfolio-modal .portfolio-modal-nav:focus {
-  color: #ffffff;
-  background: var(--accent-color);
+  color: var(--portfolio-modal-nav-hover-color);
+  background: var(--portfolio-modal-nav-hover-background);
 }
 
 .portfolio-modal .portfolio-modal-nav:disabled {
@@ -996,8 +1043,8 @@ section,
 
 .portfolio-modal .portfolio-modal-nav:disabled:hover,
 .portfolio-modal .portfolio-modal-nav:disabled:focus {
-  color: var(--accent-color);
-  background: rgba(5, 13, 24, 0.68);
+  color: var(--portfolio-modal-nav-color);
+  background: var(--portfolio-modal-nav-background);
 }
 
 .portfolio-modal .portfolio-modal-prev {
@@ -1016,17 +1063,20 @@ section,
 
 .portfolio-modal .portfolio-modal-copy {
   padding: 42px 42px 42px 76px;
+  color: var(--portfolio-modal-copy-color);
+  background: var(--portfolio-modal-copy-background);
 }
 
 .portfolio-modal .portfolio-modal-title {
   margin: 0 44px 16px 0;
+  color: var(--portfolio-modal-title-color);
   font-size: 28px;
   font-weight: 700;
 }
 
 .portfolio-modal .portfolio-modal-description {
   margin: 0 0 24px;
-  color: color-mix(in srgb, var(--default-color), transparent 18%);
+  color: var(--portfolio-modal-description-color);
   font-size: 16px;
   line-height: 1.7;
 }
@@ -1037,6 +1087,7 @@ section,
 
 .portfolio-modal .portfolio-modal-contributions h4 {
   margin-bottom: 12px;
+  color: var(--portfolio-modal-title-color);
   font-size: 18px;
   font-weight: 700;
 }
@@ -1048,11 +1099,12 @@ section,
 
 .portfolio-modal .portfolio-modal-contributions-list li {
   margin-bottom: 8px;
+  color: var(--portfolio-modal-muted-color);
   line-height: 1.55;
 }
 
 .portfolio-modal .portfolio-modal-contributions-list li::marker {
-  color: var(--accent-color);
+  color: var(--portfolio-modal-accent-color);
 }
 
 .portfolio-modal .portfolio-modal-actions {
@@ -1067,13 +1119,19 @@ section,
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  color: var(--portfolio-modal-accent-color);
   font-weight: 600;
+}
+
+.portfolio-modal .portfolio-modal-project-link:hover,
+.portfolio-modal .portfolio-modal-detail-link:hover {
+  color: color-mix(in srgb, var(--portfolio-modal-accent-color), white 18%);
 }
 
 .portfolio-modal .portfolio-modal-media {
   display: flex;
   min-height: 100%;
-  background: #050d18;
+  background: var(--portfolio-modal-media-background);
 }
 
 .portfolio-modal .portfolio-modal-image {
@@ -1082,6 +1140,7 @@ section,
   max-height: 72vh;
   object-fit: contain;
   cursor: zoom-in;
+  filter: var(--portfolio-modal-image-filter);
 }
 
 .portfolio-image-lightbox {
