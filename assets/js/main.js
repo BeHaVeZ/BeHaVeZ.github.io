@@ -124,17 +124,24 @@
   }
 
   /**
-   * Load and play portfolio videos
+   * Load and play portfolio videos.
+   * - Cards near the viewport attach + play as soon as they come close (IntersectionObserver).
+   * - Everything else is drained one at a time after window "load", so the
+   *   first paint / AOS never waits on ~30 MB of video. Once playing, a card
+   *   is never paused again when it leaves the viewport.
    */
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const portfolioVideos = document.querySelectorAll('.portfolio-card-video[data-video-src]');
+  const portfolioVideos = Array.from(document.querySelectorAll('.portfolio-card-video[data-video-src]'));
+  const saveData = navigator.connection?.saveData === true;
 
   function attachPortfolioVideo(video) {
-    if (video.src) return;
+    if (video.dataset.videoAttached === 'true') return false;
 
+    video.dataset.videoAttached = 'true';
+    video.preload = 'auto';
     video.src = video.dataset.videoSrc;
-    video.preload = 'metadata';
     video.load();
+    return true;
   }
 
   function playPortfolioVideo(video) {
@@ -144,10 +151,71 @@
     }
   }
 
-  portfolioVideos.forEach(playPortfolioVideo);
+  function waitForVideo(video, timeoutMs) {
+    return new Promise((resolve) => {
+      if (video.readyState >= 2) {
+        resolve();
+        return;
+      }
+
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        window.clearTimeout(timer);
+        video.removeEventListener('loadeddata', finish);
+        video.removeEventListener('error', finish);
+        resolve();
+      };
+      const timer = window.setTimeout(finish, timeoutMs);
+      video.addEventListener('loadeddata', finish, { once: true });
+      video.addEventListener('error', finish, { once: true });
+    });
+  }
+
+  async function drainRemainingVideos() {
+    for (const video of portfolioVideos) {
+      if (video.dataset.videoAttached === 'true') continue;
+      playPortfolioVideo(video);
+      await waitForVideo(video, 10000);
+    }
+  }
+
+  function scheduleBackgroundVideos() {
+    if (saveData) return;
+    const start = () => drainRemainingVideos();
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(start, { timeout: 1500 });
+    } else {
+      window.setTimeout(start, 300);
+    }
+  }
+
+  if (portfolioVideos.length) {
+    if ('IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          playPortfolioVideo(entry.target);
+        });
+      }, { rootMargin: '200px 0px', threshold: 0.01 });
+
+      portfolioVideos.forEach((video) => videoObserver.observe(video));
+    } else {
+      drainRemainingVideos();
+    }
+
+    if (document.readyState === 'complete') {
+      scheduleBackgroundVideos();
+    } else {
+      window.addEventListener('load', scheduleBackgroundVideos, { once: true });
+    }
+  }
 
   reducedMotion.addEventListener?.('change', () => {
     portfolioVideos.forEach((video) => {
+      if (video.dataset.videoAttached !== 'true') return;
       if (reducedMotion.matches) {
         video.pause();
       } else {
@@ -196,7 +264,10 @@
       mirror: false
     });
   }
-  window.addEventListener('load', aosInit);
+  // Init right away (script runs at the end of <body>) so [data-aos] content is
+  // not stuck at opacity:0 until window "load" — which media downloads can delay.
+  aosInit();
+  window.addEventListener('load', () => AOS.refresh());
 
   /**
    * Init typed.js
