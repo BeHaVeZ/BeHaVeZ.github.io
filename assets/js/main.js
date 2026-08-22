@@ -124,7 +124,7 @@
   }
 
   /**
-   * Load and play portfolio videos only near the viewport
+   * Load and play portfolio videos
    */
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const portfolioVideos = document.querySelectorAll('.portfolio-card-video[data-video-src]');
@@ -137,35 +137,20 @@
     video.load();
   }
 
-  function updatePortfolioVideo(video, isVisible) {
-    video.dataset.inViewport = isVisible ? 'true' : 'false';
-
-    if (!isVisible) {
-      video.pause();
-      return;
-    }
-
+  function playPortfolioVideo(video) {
     attachPortfolioVideo(video);
     if (!reducedMotion.matches) {
       video.play().catch(() => {});
     }
   }
 
-  if ('IntersectionObserver' in window) {
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => updatePortfolioVideo(entry.target, entry.isIntersecting));
-    }, { rootMargin: '240px 0px', threshold: 0.05 });
-
-    portfolioVideos.forEach((video) => videoObserver.observe(video));
-  } else {
-    portfolioVideos.forEach((video) => updatePortfolioVideo(video, true));
-  }
+  portfolioVideos.forEach(playPortfolioVideo);
 
   reducedMotion.addEventListener?.('change', () => {
     portfolioVideos.forEach((video) => {
       if (reducedMotion.matches) {
         video.pause();
-      } else if (video.dataset.inViewport === 'true') {
+      } else {
         video.play().catch(() => {});
       }
     });
