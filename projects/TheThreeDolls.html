@@ -31,7 +31,7 @@
 
     <div class="profile-img">
       <a href="/index.html">
-        <img src="/assets/img/profile.png" alt="" class="img-fluid rounded-circle">
+        <img src="/assets/img/profile.png" alt="" class="img-fluid rounded-circle" data-preloader-critical>
       </a>
     </div>
 
@@ -71,7 +71,9 @@
         <div class="row gy-4">
           <div class="col-lg-8">
             <div class="project-detail-hero">
-              <img src="/assets/img/portfolio/TheThreeDolls_1024x768.gif" alt="The Three Dolls gameplay" class="img-fluid">
+              <video src="/assets/img/portfolio/TheThreeDolls_1024x768.mp4"
+                aria-label="The Three Dolls gameplay" class="img-fluid" muted loop playsinline autoplay
+                preload="auto" data-preloader-critical></video>
             </div>
           </div>
 
@@ -250,7 +252,17 @@
 
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <div id="preloader"></div>
+  <div id="preloader">
+    <div class="preloader-content" aria-live="polite">
+      <p id="preloader-label" class="preloader-label">Loading portfolio…</p>
+      <div class="preloader-track" role="progressbar" aria-labelledby="preloader-label"
+        aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="preloader-bar"></div>
+      </div>
+      <span class="preloader-percent" aria-hidden="true">0%</span>
+    </div>
+  </div>
+  <noscript><style>#preloader { display: none; }</style></noscript>
 
   <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/vendor/aos/aos.js"></script>

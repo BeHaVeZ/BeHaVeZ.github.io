@@ -50,8 +50,132 @@
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
+    const progressTrack = preloader.querySelector('.preloader-track');
+    const progressBar = preloader.querySelector('.preloader-bar');
+    const progressPercent = preloader.querySelector('.preloader-percent');
+    const progressLabel = preloader.querySelector('.preloader-label');
+    const criticalAssets = Array.from(document.querySelectorAll('[data-preloader-critical]'));
+    const totalTasks = criticalAssets.length + 1;
+    let completedTasks = 0;
+    let isFinished = false;
+
+    function updatePreloader() {
+      const percentage = Math.min(100, Math.round((completedTasks / totalTasks) * 100));
+
+      if (progressBar) progressBar.style.width = `${percentage}%`;
+      if (progressPercent) progressPercent.textContent = `${percentage}%`;
+      if (progressTrack) progressTrack.setAttribute('aria-valuenow', percentage);
+    }
+
+    function finishPreloader() {
+      if (isFinished) return;
+
+      isFinished = true;
+      completedTasks = totalTasks;
+      updatePreloader();
+      if (progressLabel) progressLabel.textContent = 'Ready';
+
+      requestAnimationFrame(() => {
+        preloader.classList.add('preloader-hidden');
+        window.setTimeout(() => preloader.remove(), 400);
+      });
+    }
+
+    function completeTask() {
+      if (isFinished) return;
+
+      completedTasks += 1;
+      updatePreloader();
+      if (completedTasks >= totalTasks) finishPreloader();
+    }
+
+    function trackCriticalAsset(asset) {
+      const isVideo = asset.tagName === 'VIDEO';
+      const isReady = isVideo ? asset.readyState >= 2 : asset.complete;
+      let isSettled = false;
+
+      function settleAsset() {
+        if (isSettled) return;
+
+        isSettled = true;
+        completeTask();
+      }
+
+      if (isReady) {
+        settleAsset();
+        return;
+      }
+
+      const readyEvent = isVideo ? 'loadeddata' : 'load';
+      asset.addEventListener(readyEvent, settleAsset, { once: true });
+      asset.addEventListener('error', settleAsset, { once: true });
+    }
+
+    updatePreloader();
+    criticalAssets.forEach(trackCriticalAsset);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', completeTask, { once: true });
+    } else {
+      completeTask();
+    }
+
+    window.setTimeout(finishPreloader, 8000);
+  }
+
+  /**
+   * Load and play portfolio videos only near the viewport
+   */
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const portfolioVideos = document.querySelectorAll('.portfolio-card-video[data-video-src]');
+
+  function attachPortfolioVideo(video) {
+    if (video.src) return;
+
+    video.src = video.dataset.videoSrc;
+    video.preload = 'metadata';
+    video.load();
+  }
+
+  function updatePortfolioVideo(video, isVisible) {
+    video.dataset.inViewport = isVisible ? 'true' : 'false';
+
+    if (!isVisible) {
+      video.pause();
+      return;
+    }
+
+    attachPortfolioVideo(video);
+    if (!reducedMotion.matches) {
+      video.play().catch(() => {});
+    }
+  }
+
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => updatePortfolioVideo(entry.target, entry.isIntersecting));
+    }, { rootMargin: '240px 0px', threshold: 0.05 });
+
+    portfolioVideos.forEach((video) => videoObserver.observe(video));
+  } else {
+    portfolioVideos.forEach((video) => updatePortfolioVideo(video, true));
+  }
+
+  reducedMotion.addEventListener?.('change', () => {
+    portfolioVideos.forEach((video) => {
+      if (reducedMotion.matches) {
+        video.pause();
+      } else if (video.dataset.inViewport === 'true') {
+        video.play().catch(() => {});
+      }
+    });
+  });
+
+  if (reducedMotion.matches) {
+    document.querySelectorAll('video[autoplay]').forEach((video) => {
+      video.autoplay = false;
+      video.controls = true;
+      video.pause();
     });
   }
 
@@ -144,6 +268,7 @@
     const modalTitle = portfolioModalElement.querySelector('.portfolio-modal-title');
     const modalDescription = portfolioModalElement.querySelector('.portfolio-modal-description');
     const modalImage = portfolioModalElement.querySelector('.portfolio-modal-image');
+    const modalVideo = portfolioModalElement.querySelector('.portfolio-modal-video');
     const modalContributions = portfolioModalElement.querySelector('.portfolio-modal-contributions');
     const modalContributionsList = portfolioModalElement.querySelector('.portfolio-modal-contributions-list');
     const modalProjectLink = portfolioModalElement.querySelector('.portfolio-modal-project-link');
@@ -205,8 +330,18 @@
       modalImage.focus({ preventScroll: true });
     }
 
+    function stopModalVideo() {
+      if (!modalVideo) return;
+
+      modalVideo.pause();
+      modalVideo.removeAttribute('src');
+      modalVideo.load();
+      modalVideo.classList.add('d-none');
+    }
+
     function openPortfolioModal(portfolioContent) {
       closeImageLightbox();
+      stopModalVideo();
 
       const title = portfolioContent.querySelector('h4')?.textContent.trim() ?? '';
       const description = portfolioContent.querySelector('p')?.textContent.trim() ?? '';
@@ -214,8 +349,14 @@
       const projectLink = portfolioContent.querySelector('.details-link:not([data-detail-page="true"])');
       const detailPageLink = portfolioContent.querySelector('.detail-page-link, .details-link[data-detail-page="true"]');
       const image = portfolioContent.querySelector('img');
+      const video = portfolioContent.querySelector('video');
       const contributionItems = portfolioContent.querySelectorAll('.portfolio-contributions li');
       const modalTheme = portfolioContent.dataset.modalTheme?.trim();
+      const mediaSource = previewLink?.getAttribute('href')
+        ?? video?.dataset.videoSrc
+        ?? image?.getAttribute('src')
+        ?? '';
+      const isVideo = previewLink?.dataset.type === 'video' || /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(mediaSource);
 
       activePortfolioContent = portfolioContent;
       if (modalTheme) {
@@ -225,8 +366,19 @@
       }
       modalTitle.textContent = title;
       modalDescription.textContent = previewLink?.getAttribute('title') ?? description;
-      modalImage.src = previewLink?.getAttribute('href') ?? image?.getAttribute('src') ?? '';
-      modalImage.alt = title;
+      if (isVideo && modalVideo) {
+        modalImage.removeAttribute('src');
+        modalImage.classList.add('d-none');
+        modalVideo.src = mediaSource;
+        modalVideo.setAttribute('aria-label', `${title} preview`);
+        modalVideo.controls = reducedMotion.matches;
+        modalVideo.classList.remove('d-none');
+        if (!reducedMotion.matches) modalVideo.play().catch(() => {});
+      } else {
+        modalImage.src = mediaSource;
+        modalImage.alt = title;
+        modalImage.classList.remove('d-none');
+      }
 
       modalContributionsList.innerHTML = '';
       contributionItems.forEach(function(item) {
@@ -314,7 +466,10 @@
       closeImageLightbox();
     }, true);
 
-    portfolioModalElement.addEventListener('hidden.bs.modal', closeImageLightbox);
+    portfolioModalElement.addEventListener('hidden.bs.modal', function() {
+      closeImageLightbox();
+      stopModalVideo();
+    });
 
     portfolioModalElement.addEventListener('keydown', function(e) {
       if (e.key === 'ArrowLeft') {
@@ -362,14 +517,11 @@
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
 
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
+    const initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
+      itemSelector: '.isotope-item',
+      layoutMode: layout,
+      filter: filter,
+      sortBy: sort
     });
 
     isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
