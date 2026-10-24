@@ -117,7 +117,7 @@
                 Laundry Planner is a shared weekly calendar for the washing machine and tumble dryer in my student residence. Students pick an hour, choose their room and which machines they need, and everyone sees the same schedule, so nobody walks down to a machine that's already taken.
               </p>
               <p>
-                It's a real tool, not an exercise: students have been booking with it since December 2025. A lot of the work after the first version went into problems that only show up with real users, such as messy input, small phone screens and keeping the data clean.
+                It's a real tool, not an exercise: students have been booking with it since December 2025. A lot of the work after the first version went into problems that only show up with real users, such as messy input, small phone screens, keeping the data clean and two students trying to book the same hour.
               </p>
             </div>
           </div>
@@ -143,6 +143,18 @@
               <h4>Recruiter-Safe Demo</h4>
               <p>A separate demo build swaps the database layer for a fake one in the browser, so visitors can try everything without touching the students' real bookings.</p>
             </article>
+            <article class="project-highlight-card">
+              <h4>My Reservations</h4>
+              <p>A panel lists your upcoming reservations, with back-to-back hours merged into one block. Each one can be cancelled from there or added to your calendar as an .ics file with a reminder.</p>
+            </article>
+            <article class="project-highlight-card">
+              <h4>No Double Bookings</h4>
+              <p>The app re-checks the week before saving, and a unique index in Postgres has the final say. If two students book the same hour at once, the second one gets a clear message instead of a clash.</p>
+            </article>
+            <article class="project-highlight-card">
+              <h4>Polish From Real Use</h4>
+              <p>Notices replace blocking alerts, past hours are locked, a Today button jumps back to the current hour, and an open tab keeps itself up to date.</p>
+            </article>
           </div>
 
           <h3>Highlights</h3>
@@ -150,7 +162,12 @@
             <li>Weekly calendar with today and current-hour highlighting</li>
             <li>Multi-slot booking and cancelling</li>
             <li>Washer and/or dryer per booking</li>
+            <li>My reservations panel with one-tap cancel</li>
+            <li>Add to calendar (.ics) with a reminder</li>
+            <li>Database-level double-booking guard</li>
             <li>Promise-based bottom sheets instead of browser prompts</li>
+            <li>Non-blocking notices instead of alerts</li>
+            <li>Past hours locked, Today button</li>
             <li>Scroll-wheel picker for touch, mouse and keyboard</li>
             <li>Dark mode</li>
             <li>One-off SQL migration to clean up 1,000+ old rows</li>
@@ -159,7 +176,7 @@
 
           <h3>Readable Code Excerpts</h3>
           <p>
-            These snippets show the main decisions behind the project: a swappable data layer, a dependency-free scroll wheel, dialogs that read like native prompts, and cleaning up real-world data.
+            These snippets show the main decisions behind the project: a swappable data layer, a dependency-free scroll wheel, dialogs that read like native prompts, guarding against double bookings, and cleaning up real-world data.
           </p>
 
           <div class="code-showcase">
@@ -168,7 +185,7 @@
                 <span class="code-card-kicker">Swappable Data Layer</span>
                 <h4>One switch for live and demo data</h4>
                 <p>
-                  All database access goes through four functions. The demo build points them at a <code>localStorage</code> version that fills each week with generated bookings the first time it is opened, so the UI never knows which one it is talking to.
+                  All database access goes through five functions. The demo build points them at a <code>localStorage</code> version that fills each week with generated bookings the first time it is opened, so the UI never knows which one it is talking to.
                 </p>
               </div>
               <details class="code-details" open>
@@ -180,6 +197,7 @@ import * as demo from "./demoBookings";
 const api = IS_DEMO ? demo : live;
 
 export const fetchBookingsForWeek = api.fetchBookingsForWeek;
+export const fetchUpcomingForRoom = api.fetchUpcomingForRoom;
 export const createBookings = api.createBookings;
 export const deleteBookingsByIds = api.deleteBookingsByIds;
 export const updateMachinesByIds = api.updateMachinesByIds;
@@ -270,6 +288,35 @@ const ok = await openConfirmSheet({
 if (!ok) return;
 
 const { error } = await deleteBookingsByIds(toDelete.map((b) =&gt; b.id));</code></pre>
+              </details>
+            </article>
+
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Double-Booking Guard</span>
+                <h4>Letting the database have the final say</h4>
+                <p>
+                  Before saving, the app re-reads the week and skips hours someone just took, but that still leaves a split-second gap. A unique index on the hour closes it. When Postgres refuses an insert, the app fetches the week again, drops the taken hours and tries once more.
+                </p>
+              </div>
+              <details class="code-details">
+                <summary>Read double-booking excerpt</summary>
+                <pre><code class="language-javascript">// Postgres: create unique index bookings_unique_slot
+//   on public.bookings (week_key, day_index, hour);
+const UNIQUE_VIOLATION = "23505";
+
+let { data, error } = await createBookings(toInsert);
+
+// The insert is all-or-nothing: drop the hours someone just took and retry once
+if (error?.code === UNIQUE_VIOLATION) {
+  const { data: fresh, error: refetchError } = await fetchBookingsForWeek(weekKey);
+
+  if (!refetchError) {
+    replaceBookings(fresh);
+    toInsert = buildRows(selected, room, machines, fresh);
+    ({ data, error } = await createBookings(toInsert));
+  }
+}</code></pre>
               </details>
             </article>
 
