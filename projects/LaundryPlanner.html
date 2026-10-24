@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Laundry Planner - React web app</title>
+  <meta content="Try the Laundry Planner, a weekly laundry booking app built with React and Supabase, directly in the browser." name="description">
+  <meta content="React, Vite, Supabase, web app, Laundry Planner" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/assets/img/favicon.png" rel="icon">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="/assets/css/main.css" rel="stylesheet">
+
+</head>
+
+<body class="portfolio-details-page">
+
+  <header id="header" class="header dark-background d-flex flex-column">
+    <i class="header-toggle d-xl-none bi bi-list"></i>
+
+    <div class="profile-img">
+      <a href="/index.html">
+        <img src="/assets/img/profile.png" alt="" class="img-fluid rounded-circle" data-preloader-critical>
+      </a>
+    </div>
+
+    <a href="/index.html" class="logo d-flex align-items-center justify-content-center">
+    </a>
+
+    <div class="social-links text-center">
+      <a href="https://www.linkedin.com/in/alexanderterentyev/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      <a href="https://github.com/BeHaVeZ" class="github"><i class="bi bi-github"></i></a>
+      <a href="/assets/Alexander_Terentyev_CV.pdf" class="resume"><i class="bi bi-file-earmark-text navicon"></i></a>
+    </div>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="/index.html" class="project-back-link"><i class="bi bi-arrow-left"></i><span>Back</span></a></li>
+      </ul>
+    </nav>
+
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Project Details</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="/index.html">Home</a></li>
+            <li class="current">Laundry Planner Details</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Portfolio Details Section -->
+    <section id="portfolio-details" class="portfolio-details section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="web-demo-panel">
+              <div class="web-demo-shell">
+                <iframe src="https://laundry-planner-demo.vercel.app" title="Laundry Planner live demo"
+                  loading="lazy"></iframe>
+              </div>
+
+              <div class="unity-game-toolbar">
+                <div>
+                  <h2>Laundry Planner</h2>
+                  <span>Live demo: book, cancel and edit anything, the data is fake and stays in your browser</span>
+                </div>
+                <a class="web-demo-open" href="https://laundry-planner-demo.vercel.app" target="_blank" rel="noopener">
+                  <i class="bi bi-box-arrow-up-right"></i>
+                  <span>Open full screen</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
+              <h3>Project information</h3>
+              <ul>
+                <li><strong>Frontend</strong>: React 19 + Vite</li>
+                <li><strong>Language</strong>: JavaScript</li>
+                <li><strong>Backend</strong>: Supabase (Postgres)</li>
+                <li><strong>Hosting</strong>: Vercel</li>
+                <li><strong>Category</strong>: Web app / tool</li>
+                <li><strong>In use</strong>: Since December 2025, 2,600+ bookings</li>
+              </ul>
+            </div>
+            <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
+              <h2>Project overview</h2>
+              <p>
+                Laundry Planner is a shared weekly calendar for the washing machine and tumble dryer in my student residence. Students pick an hour, choose their room and which machines they need, and everyone sees the same schedule, so nobody walks down to a machine that's already taken.
+              </p>
+              <p>
+                It's a real tool, not an exercise: students have been booking with it since December 2025. A lot of the work after the first version went into problems that only show up with real users, such as messy input, small phone screens and keeping the data clean.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="project-detail-content mt-5" data-aos="fade-up" data-aos-delay="150">
+          <h3>What I Built</h3>
+          <p>
+            The app is a single-page React frontend talking directly to a Supabase Postgres database. It works on desktop and phone, with touch-friendly controls such as bottom sheets and a scroll wheel.
+          </p>
+
+          <div class="project-highlight-grid">
+            <article class="project-highlight-card">
+              <h4>Booking Flow</h4>
+              <p>Students select several free hours at once and confirm them in a single step. Cancelling and editing machines works the same way for reserved slots.</p>
+            </article>
+            <article class="project-highlight-card">
+              <h4>Room Wheel Picker</h4>
+              <p>An iOS-style scroll wheel replaced a free-text room field, so every booking is stored in one format. It is built on native scroll-snap without any library.</p>
+            </article>
+            <article class="project-highlight-card">
+              <h4>Recruiter-Safe Demo</h4>
+              <p>A separate demo build swaps the database layer for a fake one in the browser, so visitors can try everything without touching the students' real bookings.</p>
+            </article>
+          </div>
+
+          <h3>Highlights</h3>
+          <ul class="project-pill-list">
+            <li>Weekly calendar with today and current-hour highlighting</li>
+            <li>Multi-slot booking and cancelling</li>
+            <li>Washer and/or dryer per booking</li>
+            <li>Promise-based bottom sheets instead of browser prompts</li>
+            <li>Scroll-wheel picker for touch, mouse and keyboard</li>
+            <li>Dark mode</li>
+            <li>One-off SQL migration to clean up 1,000+ old rows</li>
+            <li>Demo build with generated, per-visitor data</li>
+          </ul>
+
+          <h3>Readable Code Excerpts</h3>
+          <p>
+            These snippets show the main decisions behind the project: a swappable data layer, a dependency-free scroll wheel, dialogs that read like native prompts, and cleaning up real-world data.
+          </p>
+
+          <div class="code-showcase">
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Swappable Data Layer</span>
+                <h4>One switch for live and demo data</h4>
+                <p>
+                  All database access goes through four functions. The demo build points them at a <code>localStorage</code> version that fills each week with generated bookings the first time it is opened, so the UI never knows which one it is talking to.
+                </p>
+              </div>
+              <details class="code-details" open>
+                <summary>Read service switch excerpt</summary>
+                <pre><code class="language-javascript">import { IS_DEMO } from "../constants/env";
+import * as live from "./liveBookings";
+import * as demo from "./demoBookings";
+
+const api = IS_DEMO ? demo : live;
+
+export const fetchBookingsForWeek = api.fetchBookingsForWeek;
+export const createBookings = api.createBookings;
+export const deleteBookingsByIds = api.deleteBookingsByIds;
+export const updateMachinesByIds = api.updateMachinesByIds;
+
+// demoBookings.js: seed a week the first time someone opens it
+export async function fetchBookingsForWeek(weekKey) {
+  await delay();
+  const state = loadState();
+
+  if (!state.seededWeeks.includes(weekKey)) {
+    state.seededWeeks.push(weekKey);
+    state.bookings.push(...generateWeek(weekKey));
+    saveState(state);
+  }
+
+  const data = state.bookings.filter((b) =&gt; b.week_key === weekKey);
+  return { data, error: null };
+}</code></pre>
+              </details>
+            </article>
+
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Wheel Picker Component</span>
+                <h4>Native scrolling, no re-renders</h4>
+                <p>
+                  The browser's scroll-snap handles momentum on phones. On each scroll frame the items are tilted straight in the DOM, and the selected value is only reported to React once scrolling settles.
+                </p>
+              </div>
+              <details class="code-details">
+                <summary>Read WheelPicker excerpt</summary>
+                <pre><code class="language-javascript">// Tilt and fade items by their distance from the centre
+const paint = () =&gt; {
+  frameRef.current = 0;
+  const el = listRef.current;
+  if (!el) return;
+
+  const center = el.scrollTop / ITEM_HEIGHT;
+  Array.from(el.children).forEach((child, i) =&gt; {
+    const distance = Math.max(-3, Math.min(3, i - center));
+    child.style.transform = `perspective(300px) rotateX(${distance * -22}deg)`;
+    child.style.opacity = String(Math.max(0.2, 1 - Math.abs(distance) * 0.32));
+  });
+};
+
+const handleScroll = () =&gt; {
+  if (!frameRef.current) frameRef.current = requestAnimationFrame(paint);
+  clearTimeout(settleTimerRef.current);
+  settleTimerRef.current = setTimeout(settle, SETTLE_DELAY);
+};
+
+const settle = () =&gt; {
+  const el = listRef.current;
+  if (!el || dragRef.current) return;
+  emit(Math.round(el.scrollTop / ITEM_HEIGHT));
+};</code></pre>
+              </details>
+            </article>
+
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Promise-Based Sheets</span>
+                <h4>Dialogs that read like native prompts</h4>
+                <p>
+                  Opening a bottom sheet returns a promise that resolves when the student taps OK or Cancel. The booking flow can simply <code>await</code> the answer, like <code>window.confirm</code>, but with a custom mobile UI.
+                </p>
+              </div>
+              <details class="code-details">
+                <summary>Read bottom sheet excerpt</summary>
+                <pre><code class="language-javascript">const openConfirmSheet = ({ title, message }) =&gt; {
+  return new Promise((resolve) =&gt; {
+    sheetResolveRef.current = resolve;
+
+    setSheetKind("confirmCancel");
+    setSheetTitle(title);
+    setSheetMessage(message);
+
+    requestAnimationFrame(() =&gt; setSheetOpen(true));
+  });
+};
+
+// In the cancel flow
+const ok = await openConfirmSheet({
+  title: `Cancel ${toDelete.length} reservation(s)?`,
+  message: "Tap OK to cancel all selected reserved slots.",
+});
+
+if (!ok) return;
+
+const { error } = await deleteBookingsByIds(toDelete.map((b) =&gt; b.id));</code></pre>
+              </details>
+            </article>
+
+            <article class="code-card">
+              <div class="code-card-copy">
+                <span class="code-card-kicker">Data Cleanup</span>
+                <h4>Fixing messy real-world input</h4>
+                <p>
+                  The old free-text field had stored the same room as <code>1.09</code>, <code>1.9</code> and <code>109</code>. After a backup, one migration rewrote every old row to the <code>F.RR</code> format the wheel picker now enforces.
+                </p>
+              </div>
+              <details class="code-details">
+                <summary>Read SQL migration excerpt</summary>
+                <pre><code class="language-sql">update public.bookings set room =
+  case
+    -- "1.9" becomes "1.09"
+    when room ~ '^[0-3]\.[1-9]$'
+      then split_part(room, '.', 1) || '.0' || split_part(room, '.', 2)
+    -- "0005", "109" and "206" become "0.05", "1.09" and "2.06"
+    when room ~ '^[0-9]+$'
+      and lpad(ltrim(room, '0'), 3, '0') ~ '^[0-3](0[1-9]|1[0-2])$'
+      then left(lpad(ltrim(room, '0'), 3, '0'), 1) || '.'
+        || right(lpad(ltrim(room, '0'), 3, '0'), 2)
+    else room
+  end
+where room !~ '^[0-3]\.(0[1-9]|1[0-2])$';</code></pre>
+              </details>
+            </article>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Portfolio Details Section -->
+
+  </main>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="preloader-content" aria-live="polite">
+      <p id="preloader-label" class="preloader-label">Loading portfolio…</p>
+      <div class="preloader-track" role="progressbar" aria-labelledby="preloader-label"
+        aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="preloader-bar"></div>
+      </div>
+      <span class="preloader-percent" aria-hidden="true">0%</span>
+    </div>
+  </div>
+  <noscript><style>#preloader { display: none; }</style></noscript>
+
+  <!-- Vendor JS Files -->
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/php-email-form/validate.js"></script>
+  <script src="/assets/vendor/aos/aos.js"></script>
+  <script src="/assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="/assets/js/main.js"></script>
+
+  <script>
+    (function () {
+      const codeBlocks = document.querySelectorAll("code.language-javascript, code.language-sql");
+      const keywordsByLanguage = {
+        javascript: new Set([
+          "async", "await", "const", "else", "export", "from", "function", "if", "import",
+          "let", "new", "return", "as"
+        ]),
+        sql: new Set([
+          "update", "set", "case", "when", "then", "else", "end", "where", "and", "or"
+        ])
+      };
+      const literals = new Set(["true", "false", "null", "undefined"]);
+      const tokenPattern = /\/\/.*|--.*|`(?:\\.|[^`\\])*`|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\b\d+(?:\.\d+)?\b|\b[A-Za-z_$][A-Za-z0-9_$]*\b/g;
+
+      function escapeHtml(value) {
+        return value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function classifyToken(token, source, tokenEndIndex, keywords) {
+        if (token.startsWith("//") || token.startsWith("--")) {
+          return "comment";
+        }
+
+        if (token.startsWith("\"") || token.startsWith("'") || token.startsWith("`")) {
+          return "string";
+        }
+
+        if (/^\d/.test(token)) {
+          return "number";
+        }
+
+        if (literals.has(token)) {
+          return "literal";
+        }
+
+        if (keywords.has(token)) {
+          return "keyword";
+        }
+
+        const nextCharacter = source.slice(tokenEndIndex).match(/\S/)?.[0];
+        if (nextCharacter === "(") {
+          return "method";
+        }
+
+        if (/^[A-Z]/.test(token)) {
+          return "type";
+        }
+
+        return "";
+      }
+
+      function highlight(source, keywords) {
+        let highlighted = "";
+        let cursor = 0;
+
+        source.replace(tokenPattern, function (token, offset) {
+          const tokenEndIndex = offset + token.length;
+          const tokenClass = classifyToken(token, source, tokenEndIndex, keywords);
+
+          highlighted += escapeHtml(source.slice(cursor, offset));
+          highlighted += tokenClass
+            ? `<span class="code-token-${tokenClass}">${escapeHtml(token)}</span>`
+            : escapeHtml(token);
+          cursor = tokenEndIndex;
+
+          return token;
+        });
+
+        return highlighted + escapeHtml(source.slice(cursor));
+      }
+
+      codeBlocks.forEach(function (codeBlock) {
+        const language = codeBlock.classList.contains("language-sql") ? "sql" : "javascript";
+        codeBlock.innerHTML = highlight(codeBlock.textContent, keywordsByLanguage[language]);
+      });
+    })();
+  </script>
+
+</body>
+
+</html>
