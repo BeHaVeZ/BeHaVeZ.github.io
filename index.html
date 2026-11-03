@@ -159,6 +159,32 @@
               </div>
             </div><!-- End Portfolio Item -->
 
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-csharp filter-Unity filter-team">
+              <div class="portfolio-content h-100">
+                <video class="img-fluid portfolio-card-video" muted loop playsinline preload="none"
+                  poster="assets/img/portfolio/posters/StrikeMania_1024x768.jpg"
+                  data-video-src="assets/img/portfolio/StrikeMania_1024x768.mp4" aria-label="StrikeMania gameplay"></video>
+                <div class="portfolio-info">
+                  <h4>StrikeMania</h4>
+                  <p>A retro arcade time-attack game where you are the missile and every previous missile replays alongside you</p>
+                  <a href="assets/img/portfolio/StrikeMania_1024x768.mp4" data-type="video"
+                    title="StrikeMania - A retro arcade time-attack game where you are the missile and every previous missile replays alongside you."
+                    data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
+                      class="bi bi-zoom-in"></i></a>
+                  <a href="https://store.steampowered.com/app/5251980/Strikemania/" title="More Details"
+                    class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+                <ul class="portfolio-contributions d-none">
+                  <li>Profiled the game and cut per-frame cost: pooled missiles, explosion VFX and blast rings, trimmed per-frame allocations, cached FMOD parameters and made renderers skip unchanged state.</li>
+                  <li>Built an editor benchmark that replays a stress session through live and watch modes at 4K and 1080p and reports GC and frame-spike stats, so every optimisation was measured.</li>
+                  <li>Lightened the particle budget: fewer trail particles, no spark trail collision, no trail particles on ghost missiles and lighter ghost death effects.</li>
+                  <li>Designed and shipped the display settings: Performance, Balanced and Quality presets layered over anti-aliasing, bloom and scanline toggles, with a derived Custom preset.</li>
+                  <li>Added resolution and window mode options, fitted the camera and UI to non-16:9 aspect ratios, and a Performance URP quality level without MSAA and scanlines.</li>
+                  <li>Added integrated GPU detection so Intel and AMD APU laptops default to Balanced, which keeps the CRT look and drops the extra MSAA resolve that anti-aliasing plus scanlines forced.</li>
+                </ul>
+              </div>
+            </div><!-- End Portfolio Item -->
+
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-cpp">
               <div class="portfolio-content h-100">
                 <video class="img-fluid portfolio-card-video" muted loop playsinline preload="none"
