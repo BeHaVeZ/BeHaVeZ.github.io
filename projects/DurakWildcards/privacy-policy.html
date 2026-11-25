@@ -109,20 +109,22 @@
       <div class="container">
         <div class="policy-content">
           <!-- Generated from docs/privacy-policy.md in the Durak: Wildcards repo; edit it there and regenerate. -->
-<p><em>Last updated: 2 October 2026</em></p>
+<p><em>Last updated: 23 November 2026</em></p>
 <p>This policy explains what information the mobile game <strong>Durak: Wildcards</strong> ("the game") collects, why, who it
-is shared with, and the choices you have. The game is made by <strong>AltForge Studio</strong>, which
+is shared with, and the choices you have. The game is made by <strong>AltForge Studio</strong> (Alexander Terentyev), which
 is responsible for your information under this policy ("we", "us").</p>
 <p>Contact: <strong>support@altforgestudio.com</strong></p>
 <h2>The short version</h2>
 <ul>
 <li><strong>You can play offline without an account.</strong> Games against the computer need no sign-in, no network and no
-  personal information.</li>
+    personal information.</li>
 <li><strong>Online play uses a game account</strong> run on Unity Gaming Services. It is created automatically and
-  anonymously; you can link it to Google Play Games so your progress follows you to a new phone.</li>
+    anonymously; you can link it to Google Play Games (on Android) or Game Center (on an iPhone) so your
+    progress follows you to a new phone.</li>
 <li><strong>What other players can see</strong> is your player name and tag, your avatar, your friend code and — unless you
-  turn on <strong>Hide my stats</strong> — your level, rating, results and recent matches.</li>
-<li><strong>Ads and analytics only run after you agree</strong>, and saying no never locks you out of the game.</li>
+    turn on <strong>Hide my stats</strong> — your level, rating, results and recent matches.</li>
+<li><strong>Where the law asks for your consent, ads and analytics wait for it.</strong> Elsewhere analytics is on unless
+    you switch it off, and the only ad is one you choose to watch. Saying no never locks you out of the game.</li>
 <li><strong>You can delete your account</strong> from inside the game, or by emailing us.</li>
 <li>We do not sell your personal information.</li>
 </ul>
@@ -138,15 +140,19 @@ your phone unless you use the online features described below.</p>
 you in to <strong>Unity Authentication</strong> and creates a player account. That account has:</p>
 <ul>
 <li>a <strong>player ID</strong> assigned by Unity;</li>
-<li>a <strong>player name</strong> you choose, with a number tag the service adds (for example <code>bob#4821</code>); if you link
-  Google Play Games and have not chosen a name, your Play Games display name is used once as a starting
-  point;</li>
+<li>a <strong>player name</strong> you choose, with a number tag the service adds (for example <code>alex#4821</code>); if you link
+    Google Play Games or Game Center and have not chosen a name, your display name there is used once as a
+    starting point;</li>
 <li>a <strong>friend code</strong> derived from your player ID.</li>
 </ul>
-<h3>1.3 Google Play Games (optional)</h3>
-<p>If you link Google Play Games, Google sends Unity Authentication a one-time sign-in code, and your account is
-linked to your <strong>Google Play Games player ID</strong>. The game reads your Play Games display name. We do not access
-your Google account's email address, contacts or files.</p>
+<h3>1.3 Google Play Games and Game Center (optional)</h3>
+<p>On Android, if you link Google Play Games, Google sends Unity Authentication a one-time sign-in code, and your
+account is linked to your <strong>Google Play Games player ID</strong>. The game reads your Play Games display name. We do
+not access your Google account's email address, contacts or files.</p>
+<p>On an iPhone, if you connect Game Center, Apple gives the game a signed proof of your Game Center player, which
+Unity Authentication checks, and your account is linked to your <strong>Game Center player ID</strong> (an identifier Apple
+issues for our games only). The game reads your Game Center display name. We do not access your Apple
+Account's email address, contacts or files.</p>
 <h3>1.4 Cloud backup</h3>
 <p>While you are signed in, the game backs up your statistics, coins and owned items, and your recent match
 replays to <strong>Unity Cloud Save</strong> under your player ID, so they survive reinstalling or changing phones.</p>
@@ -172,47 +178,69 @@ removes you from name search; people can still add you with your friend code.</p
 <h3>1.6 Online matches, lobbies and friends</h3>
 <ul>
 <li><strong>Lobbies:</strong> when you host or join a table, your player name, tag, avatar, player ID, rating and — unless
-  hidden — a short summary of your stats are shared with the other players at that table. With Hide my stats
-  on, your rating is still used by the game to calculate rating changes, but it is not shown.</li>
+    hidden — a short summary of your stats are shared with the other players at that table. With Hide my stats
+    on, your rating is still used by the game to calculate rating changes, but it is not shown.</li>
 <li><strong>Matches:</strong> online matches are connected through <strong>Unity Relay</strong> servers; players never connect to each
-  other directly, but the relay servers necessarily see your device's IP address. Your moves are sent to the
-  table's host device. When a match ends, each player receives the full record of that match (every card and
-  move, and the other players' names and player IDs) for their replay.</li>
+    other directly, but the relay servers necessarily see your device's IP address. Your moves are sent to the
+    table's host device. When a match ends, each player receives the full record of that match (every card and
+    move, and the other players' names and player IDs) for their replay.</li>
 <li><strong>Friends:</strong> the <strong>Unity Friends</strong> service stores your friends list, friend requests, blocks and invites,
-  and shows your friends whether you are online, when you were last seen, and the table you are hosting.</li>
+    and shows your friends whether you are online and where in the game you are (in the menu, waiting in a
+    lobby, or in a match — a single-player match too), when you were last seen, and the table you are hosting.</li>
 <li>There is <strong>no chat</strong> in the game.</li>
 </ul>
 <h3>1.7 Purchases</h3>
-<p>Purchases are handled by <strong>Google Play Billing</strong>. We never see your payment details. The game checks the
-purchase receipt on your device and records which items you own in your game account and cloud backup.
-Google keeps its own record of your purchase history.</p>
-<h3>1.8 Advertising (after you consent)</h3>
-<p>The game can show optional ads — a rewarded video you choose to watch for extra coins, and an occasional ad
-between matches. Ads are served through <strong>Unity LevelPlay</strong> and the ad networks it works with (such as
-<strong>Unity Ads</strong> and <strong>Google AdMob</strong>). Before any ad is loaded, the game asks for your consent through a consent
-form. If you agree, these services may collect your device's <strong>advertising ID</strong>, IP address, device and app
+<p>Purchases are handled by <strong>Google Play Billing</strong> on Android and by <strong>Apple's App Store</strong> on an iPhone. We
+never see your payment details. The game checks the purchase receipt on your device and records which items
+you own in your game account and cloud backup. Google or Apple keeps its own record of your purchase history.
+On an iPhone, <strong>Restore purchases</strong> in the shop asks the App Store for what you bought before.</p>
+<h3>1.8 Advertising</h3>
+<p>The game shows one kind of ad, and only when you ask for it: a rewarded video you can choose to watch for
+extra coins at the end of a match. Ads are served through <strong>Unity LevelPlay</strong> and the ad networks it works
+with (such as <strong>Unity Ads</strong> and <strong>Google AdMob</strong>). Where the law requires your consent — for example in the
+European Economic Area and the United Kingdom — the game asks for it through a consent form before any ad is
+loaded. Once ads may load, these services may collect your device's <strong>advertising ID</strong>, IP address, device and app
 information, and how you interact with ads, to show ads, measure them, prevent fraud and — if you allow it —
 personalise them. If you decline, you can still play the whole game; you may simply not be offered ads or
-may see non-personalised ones. You can change your choice at any time under <strong>Settings → Privacy choices</strong>,
+may see non-personalised ones. You can change your choice at any time under <strong>Settings → Privacy</strong>,
 and you can reset or delete your advertising ID in your phone's settings.</p>
-<h3>1.9 Analytics (after you consent)</h3>
-<p>With your consent, the game sends usage events (such as matches started and finished, screens opened and
-purchases made) and technical information (device model, operating system, app version) to <strong>Unity
-Analytics</strong>, so we can find problems and improve the game. You can withdraw consent at any time under
-<strong>Settings → Privacy choices</strong>.</p>
+<p>On an iPhone the game does not ask for permission to track you across other companies' apps and websites, so
+these services do not receive Apple's advertising identifier. They may use an identifier that is specific to
+our games on your device.</p>
+<h3>1.9 Analytics</h3>
+<p>The game sends usage events (such as matches started and finished, screens opened and purchases made) and
+technical information (device model, operating system, app version) to <strong>Unity Analytics</strong>, so we can find
+problems and improve the game. Where the law requires your consent — for example in the European Economic
+Area and the United Kingdom — nothing is sent until you say yes to the game's own question, which is asked
+once after the ad consent form. Elsewhere it is on unless you switch it off. Either way you can change it at
+any time under <strong>Settings → Privacy</strong>.</p>
 <h3>1.10 Connection and technical information</h3>
 <p>Some information leaves your phone whenever the game uses the network, with or without an account and
 without a consent choice, because the services cannot work without it:</p>
 <ul>
 <li><strong>Your IP address and an approximate location.</strong> Every request to Unity's services (sections 1.2–1.6) and to
-  Google Play carries your device's IP address, from which the services may work out an approximate location,
-  such as your country or region, to route the request, keep the service secure and measure how it performs.
-  This includes the shop's public list of items and prices, which the game downloads from <strong>Unity Cloud
-  Content Delivery</strong> without signing you in. We never ask for or use your precise location.</li>
-<li><strong>Diagnostics.</strong> Google Play Billing, the purchasing library that talks to it (section 1.7) and Google Play
-  Games (section 1.3) send technical information such as error reports and performance data, so that
-  purchases and sign-in work and their problems can be fixed.</li>
+    Google Play or Apple carries your device's IP address, from which the services may work out an approximate location,
+    such as your country or region, to route the request, keep the service secure and measure how it performs.
+    This includes the shop's public list of items and prices, which the game downloads from <strong>Unity Cloud
+    Content Delivery</strong> without signing you in. We never ask for or use your precise location.</li>
+<li><strong>Diagnostics.</strong> Google Play Billing or the App Store, the purchasing library that talks to them (section 1.7)
+    and Google Play Games or Game Center (section 1.3) send technical information such as error reports and
+    performance data, so that purchases and sign-in work and their problems can be fixed.</li>
 </ul>
+<h3>1.11 Notifications</h3>
+<p>The game can send notifications to your phone: a friend request and the answer to yours, a friend's invitation
+to a table, a tournament you registered for (its draw, your next match, a reminder before it starts, an opponent
+waiting for you, how it ended or that it was called off) and, only if you switch it on, news about the game.
+Each of the three kinds has its own switch under <strong>Settings → Notifications</strong>; invitations and tournaments are
+on by default, news is off until you turn it on, and your phone's own notification settings decide above all of
+them. When a switch is on and your phone allows it, the game registers your device with <strong>Firebase Cloud
+Messaging</strong>, Google's notification service, which gives it a device token, a random identifier of this install
+of the game. We keep that token with your account (section 1.4) together with the game's language and your three
+switches, so that the server can address your device and respect your choices; it is deleted when you turn every
+switch off, sign out or delete your account. A notification's text is sent through Firebase to your phone and
+is not stored by us. Firebase processes the token and the message on Google's behalf under Google's privacy
+policy (section 3). On an iPhone a notification reaches your phone through the <strong>Apple Push Notification
+service</strong>, and the device token is the one Apple issues for this install of the game.</p>
 <h2>2. Why we use your information</h2>
 <div class="table-responsive"><table class="table table-bordered policy-table">
 <thead>
@@ -224,8 +252,8 @@ without a consent choice, because the services cannot work without it:</p>
 </thead>
 <tbody>
 <tr>
-<td>Running the game and its online features: accounts, matchmaking, matches, friends, cloud backup, the shop</td>
-<td>Sections 1.2–1.6, 1.10</td>
+<td>Running the game and its online features: accounts, matchmaking, matches, friends, cloud backup, the shop, the notifications you switched on</td>
+<td>Sections 1.2–1.6, 1.10, 1.11</td>
 <td>Performing our agreement with you to provide the game</td>
 </tr>
 <tr>
@@ -255,12 +283,16 @@ without a consent choice, because the services cannot work without it:</p>
 it only:</p>
 <ul>
 <li>with <strong>other players</strong>, as described in sections 1.5 and 1.6;</li>
-<li>with the <strong>service providers</strong> that run the game for us, who process it on our behalf:</li>
+<li>with the <strong>service providers</strong> that run the game for us, who process it on our behalf:<ul>
 <li><strong>Unity Technologies</strong> — Unity Authentication, Cloud Save, Lobby, Relay, Friends, Cloud Content
     Delivery (the shop's public list of items and prices, downloaded with no account), LevelPlay, Unity Ads
     and Unity Analytics (<a target="_blank" rel="noopener" href="https://unity.com/legal/game-player-and-app-user-privacy-policy">Unity privacy policy</a>);</li>
-<li><strong>Google</strong> — Google Play Games, Google Play Billing and AdMob
+<li><strong>Google</strong> — Google Play Games, Google Play Billing, AdMob and Firebase Cloud Messaging (notifications, section 1.11)
     (<a target="_blank" rel="noopener" href="https://policies.google.com/privacy">Google privacy policy</a>);</li>
+<li><strong>Apple</strong>, on an iPhone — Game Center, the App Store's purchases and the Apple Push Notification service
+    (<a target="_blank" rel="noopener" href="https://www.apple.com/legal/privacy/">Apple privacy policy</a>);</li>
+</ul>
+</li>
 <li>when the law requires it, or to protect the rights and safety of our players or ourselves.</li>
 </ul>
 <p>These providers may process information on servers outside your country, including in the United States. Where
@@ -269,7 +301,7 @@ standard contractual clauses.</p>
 <h2>4. How long we keep it</h2>
 <ul>
 <li>Information on your device stays until you delete the account (section 5), clear the app's data, or
-  uninstall the game.</li>
+    uninstall the game.</li>
 <li>Your game account and cloud data are kept while your account exists, and are deleted when you delete it.</li>
 <li>Replays: the game keeps your last ten finished matches; older ones are removed automatically.</li>
 <li>Ad and analytics providers keep information according to their own retention policies.</li>
@@ -277,13 +309,13 @@ standard contractual clauses.</p>
 <h2 id="delete-account">5. Deleting your account</h2>
 <ul>
 <li><strong>In the game:</strong> open <strong>Account → Delete account</strong> and confirm. This deletes your Unity player account and
-  wipes the game's progress, coins, owned items, replays and friends data from your phone.</li>
+    wipes the game's progress, coins, owned items, replays and friends data from your phone.</li>
 <li><strong>By email:</strong> if you cannot use the game any more, email <strong>support@altforgestudio.com</strong> from any address
-  with the subject "Delete my Durak: Wildcards account" and your player name and tag or friend code (shown on
-  the Account screen). We will delete your account and its cloud data within 30 days and confirm by email.</li>
+    with the subject "Delete my Durak: Wildcards account" and your player name and tag or friend code (shown on
+    the Account screen). We will delete your account and its cloud data within 30 days and confirm by email.</li>
 </ul>
-<p>Deleting your account cannot be undone. Purchases are tied to your Google Play account; Google keeps its own
-purchase records, which we cannot delete.</p>
+<p>Deleting your account cannot be undone. Purchases are tied to your Google Play account or your Apple Account;
+Google and Apple keep their own purchase records, which we cannot delete.</p>
 <h2>6. Your rights</h2>
 <p>Depending on where you live, you may have the right to access the information we hold about you, to have it
 corrected or deleted, to restrict or object to its use, to receive a copy of it, and to withdraw consent at
@@ -300,8 +332,12 @@ provide and keep access to the game's back-end limited to ourselves.</p>
 <p>If we change this policy, we will update the date at the top and publish the new version at the same address.
 If the change is significant, we will also tell you in the game.</p>
 <h2>10. Contact</h2>
-<p>AltForge Studio
+<p>AltForge Studio (Alexander Terentyev)<br>
 Email: <strong>support@altforgestudio.com</strong></p>
+<p>The game's <strong>Report a bug</strong> button opens your own mail app with a report filled in: what you typed, the game
+version, your device model and operating system, your player ID if you are signed in, the record of your last
+match and the game's last log lines. Nothing is sent until you send that mail, and you can read and edit it
+first. We use what you send only to answer you and fix the problem.</p>
         </div>
       </div>
     </section>
